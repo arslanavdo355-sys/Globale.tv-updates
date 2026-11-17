@@ -9,13 +9,18 @@ Kendi M3U veya Xtream listelerini ekle; canlı TV, film ve dizileri kumandayla r
 
 ## ⬇️ Download / İndir
 
-**[Download Globale.tv APK (Android TV / Fire TV)](https://github.com/arslanavdo355-sys/Globale.tv-updates/releases/latest/download/Globale.tv.apk)**
+**[⬇️ Download Globale.tv APK – most devices / çoğu cihaz](https://github.com/arslanavdo355-sys/Globale.tv-updates/releases/latest/download/Globale.tv.apk)**
+
+[Download the x86 / Intel-chip version](https://github.com/arslanavdo355-sys/Globale.tv-updates/releases/latest/download/Globale.tv-x86_64.apk) — for Android boxes with an Intel/x86 chip instead of ARM / ARM değil, Intel/x86 işlemcili Android kutular için.
+
+[See all versions / Tüm sürümler](https://github.com/arslanavdo355-sys/Globale.tv-updates/releases)
 
 | Device / Cihaz | How / Nasıl |
 |---|---|
 | Android TV, Google TV | Install **Downloader**, enter code **XXXXXXX** or the link above / **Downloader**'ı kur, **XXXXXXX** kodunu ya da yukarıdaki linki gir |
 | Amazon Fire TV / Fire TV Stick | Install **Downloader** from the Appstore, enter code **XXXXXXX** or the link above / Appstore'dan **Downloader**'ı kur, **XXXXXXX** kodunu ya da yukarıdaki linki gir |
-| Android phone / box | Open the link above in the browser / Linki tarayıcıda aç |
+| Android phone / box (ARM) | Tap the main download link above / Yukarıdaki ana linke dokun |
+| Android box (Intel/x86) | Use the x86 link above / Yukarıdaki x86 linkini kullan |
 | LG webOS | In development, coming soon / Geliştiriliyor, yakında |
 
 ## Screenshots / Ekran görüntüleri
