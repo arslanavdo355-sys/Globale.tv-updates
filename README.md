@@ -1,43 +1,36 @@
-<p align="center">
-  <img src="assets/logo.jpg" alt="Globale.tv" width="280">
-</p>
+# Globale.tv – IPTV Player for Android TV, Fire TV & webOS
 
-<h1 align="center">Globale.tv</h1>
-<p align="center"><b>IPTV-Player für Android TV · Android TV için IPTV oynatıcı · IPTV player for Android TV</b></p>
+**Globale.tv** is a free, modern media player for **Android TV, Google TV, Fire TV, Android boxes** and (coming soon) **LG webOS**.
+Add your own M3U or Xtream playlists and watch live TV, movies and series with a clean, remote-friendly interface.
+No channels or subscriptions are included.
 
-<p align="center">
-  <a href="https://github.com/arslanavdo355-sys/Globale.tv-updates/releases/latest"><b>⬇️ Download / İndir / Herunterladen</b></a>
-</p>
+**Globale.tv**, **Android TV, Google TV, Fire TV, Android kutular** ve (yakında) **LG webOS** için ücretsiz, modern bir oynatıcıdır.
+Kendi M3U veya Xtream listelerini ekle; canlı TV, film ve dizileri kumandayla rahatça izle. Kanal veya abonelik içermez.
 
----
+## ⬇️ Download / İndir
 
-## 🇹🇷 Türkçe
-Globale.tv, Android TV için hazırlanmış bir IPTV oynatıcısıdır. Kendi M3U veya Xtream kaynaklarını ekler, canlı TV'yi program rehberiyle (EPG) birlikte izlersin.
+**[Download Globale.tv APK (Android TV / Fire TV)](https://github.com/arslanavdo355-sys/Globale.tv-updates/releases/latest/download/Globale.tv.apk)**
 
-- Canlı TV, program rehberi (EPG) ve kanal grupları
-- 6 dil: Türkçe, Deutsch, English, العربية, Русский, Français
-- Uygulama içinden tek tuşla güncelleme
+| Device / Cihaz | How / Nasıl |
+|---|---|
+| Android TV, Google TV, Fire TV | Install **Downloader**, enter code **XXXXXXX** or the link above / **Downloader**'ı kur, **XXXXXXX** kodunu ya da yukarıdaki linki gir |
+| Android phone / box | Open the link above in the browser / Linki tarayıcıda aç |
+| LG webOS | Coming soon / Yakında |
 
-**Kurulum:** [Releases](https://github.com/arslanavdo355-sys/Globale.tv-updates/releases/latest) sayfasından `Globale.tv.apk` dosyasını indirip TV'ne kur. Downloader uygulamasıyla kurmak için kod: **2178711**
+## Screenshots / Ekran görüntüleri
 
-## 🇩🇪 Deutsch
-Globale.tv ist ein IPTV-Player für Android TV. Eigene M3U- oder Xtream-Quellen hinzufügen und Live-TV mit Programmführer (EPG) ansehen.
+![Live TV with preview](assets/screens/canli-tv-onizleme.jpg)
+![Quick menu](assets/screens/canli-tv-menu.jpg)
+![Channel list with quality badges](assets/screens/kanal-listesi.jpg)
+![Settings](assets/screens/ayarlar.jpg)
 
-- Live-TV, Programmführer (EPG) und Sendergruppen
-- 6 Sprachen: Türkçe, Deutsch, English, العربية, Русский, Français
-- Update direkt in der App
+## Features / Özellikler
+- Live TV with EPG, categories, favourites and quality badges (SD / HD / FHD / 4K)
+- M3U and Xtream playlists, several playlists in one folder tree
+- Preview window, clock and weather on the channel screen
+- Movies, series and continue watching
+- Theme, text weight and start-up options in Settings
+- Six languages: Turkish, English, German, French, Russian, Arabic
+- Built for the TV remote
 
-**Installation:** Auf der Seite [Releases](https://github.com/arslanavdo355-sys/Globale.tv-updates/releases/latest) die Datei `Globale.tv.apk` herunterladen und auf dem TV installieren. Downloader-Code: **2178711**
-
-## 🇬🇧 English
-Globale.tv is an IPTV player for Android TV. Add your own M3U or Xtream sources and watch live TV with an electronic program guide (EPG).
-
-- Live TV, EPG and channel groups
-- 6 languages: Türkçe, Deutsch, English, العربية, Русский, Français
-- One-tap in-app updates
-
-**Install:** Download `Globale.tv.apk` from the [Releases](https://github.com/arslanavdo355-sys/Globale.tv-updates/releases/latest) page and install it on your TV. Downloader code: **2178711**
-
----
-
-<sub>Globale.tv enthält und liefert keine Sender oder Inhalte. Nutzer fügen ausschließlich eigene, rechtmäßig erworbene Quellen hinzu. · Globale.tv does not provide any channels or content; users add their own legally obtained sources.</sub>
+Keywords: Globale.tv, IPTV player, M3U player, Xtream player, Android TV, Google TV, Fire TV, webOS, free media player.
