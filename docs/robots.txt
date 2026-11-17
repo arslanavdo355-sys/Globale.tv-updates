@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://arslanavdo355-sys.github.io/Globale.tv-updates/sitemap.xml
