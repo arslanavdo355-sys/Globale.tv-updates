@@ -3,30 +3,278 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Globale.tv – İndir</title>
+<title>Globale.tv — Android TV için ücretsiz IPTV oynatıcısı</title>
+<meta name="description" content="Globale.tv: Android TV, Google TV, Fire TV Stick ve Android kutular için ücretsiz, modern IPTV oynatıcısı. M3U ve Xtream desteği.">
 <style>
-  :root{--bg:#0b1220;--card:#111a2e;--accent:#22c1dc;--text:#f4f7fb;--muted:#9fb0c9}
+  :root{
+    --bg0:#050d21;--bg1:#070f25;--bg2:#0a1433;--panel:#0a1833;--panel2:#0e2148;
+    --text:#f9fbff;--muted:#9eacc8;--muted2:#c2d2e9;
+    --cyan:#46d8ff;--blue:#2784ff;--violet:#8168ff;
+    --border:rgba(136,174,235,.17);
+    --grad:linear-gradient(105deg,#28d8f8,#2588fb,#7257f4);
+  }
   *{box-sizing:border-box}
-  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:radial-gradient(1200px 600px at 50% -10%, #1b2a4a, var(--bg));font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--text);padding:24px}
-  .card{max-width:480px;width:100%;background:var(--card);border-radius:20px;padding:32px 28px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.4)}
-  .logo{width:72px;height:72px;border-radius:18px;margin:0 auto 16px;display:block}
-  h1{font-size:26px;margin:0 0 6px}
-  p{color:var(--muted);margin:0 0 24px;line-height:1.5}
-  .btn{display:block;width:100%;padding:16px;border-radius:14px;background:var(--accent);color:#06222a;font-weight:700;font-size:17px;text-decoration:none;margin-bottom:12px}
-  .btn.secondary{background:transparent;border:1px solid #2a3b5c;color:var(--text);font-weight:600}
-  .note{font-size:13px;color:var(--muted);margin-top:20px}
-  a{transition:transform .15s}
-  a:active{transform:scale(.98)}
+  html{scroll-behavior:smooth;scroll-padding-top:90px}
+  body{margin:0;background:var(--bg0);color:var(--text);font-family:Inter,Manrope,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-size:15px;line-height:1.6}
+  a{color:inherit}
+  img{max-width:100%;display:block}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 20px}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);margin-bottom:14px}
+  .eyebrow::before{content:"";width:22px;height:2px;background:var(--cyan);display:inline-block;border-radius:2px}
+  h1,h2,h3{letter-spacing:-.02em;margin:0}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 24px;border-radius:13px;font-weight:700;font-size:15px;text-decoration:none;transition:transform .15s,box-shadow .15s;border:1px solid transparent;white-space:nowrap}
+  .btn:active{transform:scale(.98)}
+  .btn-primary{background:var(--grad);color:#04121c;box-shadow:0 10px 30px rgba(39,132,255,.35)}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 36px rgba(39,132,255,.45)}
+  .btn-outline{background:rgba(255,255,255,.03);border-color:var(--border);color:var(--text)}
+  .btn-outline:hover{transform:translateY(-2px);border-color:rgba(136,174,235,.4)}
+  .btn-block{display:flex;width:100%}
+
+  header{position:sticky;top:0;z-index:50;height:72px;display:flex;align-items:center;background:rgba(5,13,33,.75);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px}
+  .brand img{width:34px;height:34px;border-radius:9px}
+  nav.links{display:flex;gap:26px;font-size:14px;color:var(--muted2);font-weight:600}
+  nav.links a:hover{color:var(--text)}
+  @media (max-width:760px){nav.links{display:none}}
+
+  .hero{position:relative;min-height:560px;display:flex;align-items:center;overflow:hidden;background:
+      radial-gradient(900px 500px at 85% 10%, rgba(39,132,255,.18), transparent 60%),
+      linear-gradient(100deg, var(--bg0) 38%, #0c1a3c 70%, #10234a 100%)}
+  .hero .wrap{position:relative;z-index:2;padding-top:72px;padding-bottom:96px}
+  .hero h1{font-size:clamp(34px,5vw,60px);max-width:760px}
+  .hero h1 .gr{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p.lead{color:var(--muted2);max-width:560px;margin:18px 0 28px;font-size:16px}
+  .hero .ctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:34px}
+  .platforms{display:flex;gap:22px;flex-wrap:wrap;align-items:center;color:var(--muted);font-size:13px;font-weight:600}
+  .platforms span{display:flex;align-items:center;gap:7px}
+  .platforms svg{width:18px;height:18px;opacity:.85}
+
+  .release{margin-top:-46px;position:relative;z-index:3}
+  .release .card{display:flex;align-items:center;gap:18px;flex-wrap:wrap;justify-content:space-between;background:linear-gradient(135deg,var(--panel2),var(--panel));border:1px solid var(--border);border-radius:20px;padding:22px 26px;box-shadow:0 20px 50px rgba(0,0,0,.35)}
+  .release .left{display:flex;align-items:center;gap:14px}
+  .release .ic{width:44px;height:44px;border-radius:12px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:20px;flex:none}
+  .release .ttl{font-weight:700;font-size:15px}
+  .release .sub{color:var(--muted);font-size:13px}
+  .pill{font-family:ui-monospace,Menlo,monospace;letter-spacing:.08em;background:rgba(70,216,255,.1);border:1px solid rgba(70,216,255,.3);color:var(--cyan);padding:8px 16px;border-radius:999px;font-size:13px;font-weight:700}
+
+  section{padding:88px 0}
+  .section-head{max-width:620px;margin:0 auto 44px;text-align:center}
+  .section-head h2{font-size:clamp(26px,3.4vw,38px)}
+  .section-head p{color:var(--muted);margin-top:12px}
+
+  .dl-grid{display:grid;grid-template-columns:1.25fr 1fr;gap:20px}
+  @media (max-width:860px){.dl-grid{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:20px;padding:28px}
+  .dl-main{display:flex;flex-direction:column}
+  .tags{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 20px}
+  .tag{font-size:12px;font-weight:700;color:var(--muted2);background:rgba(255,255,255,.05);border:1px solid var(--border);padding:5px 11px;border-radius:999px}
+  .dl-side{display:flex;flex-direction:column;gap:20px}
+  .dl-side .card{padding:22px}
+  .dl-side h3{font-size:15px;margin-bottom:6px}
+  .dl-side p{color:var(--muted);font-size:13px;margin:0 0 14px}
+
+  .steps{display:flex;gap:20px;flex-wrap:wrap;justify-content:center}
+  .step{display:flex;align-items:center;gap:12px;color:var(--muted2);font-size:14px;font-weight:600}
+  .step b{width:30px;height:30px;border-radius:999px;background:var(--grad);color:#04121c;display:flex;align-items:center;justify-content:center;font-size:14px;flex:none}
+  .step-arrow{color:var(--muted);opacity:.5}
+
+  .feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  @media (max-width:860px){.feat-grid{grid-template-columns:1fr}}
+  .feat{position:relative;padding:26px;border-radius:18px;background:radial-gradient(260px 160px at 20% 0%, rgba(70,216,255,.08), transparent),var(--panel);border:1px solid var(--border);transition:transform .2s,border-color .2s}
+  .feat:hover{transform:translateY(-4px);border-color:rgba(70,216,255,.35)}
+  .feat .n{font-size:12px;font-weight:800;color:var(--cyan);letter-spacing:.08em}
+  .feat h3{font-size:17px;margin:10px 0 8px}
+  .feat p{color:var(--muted);font-size:13.5px;margin:0}
+
+  .shots{display:grid;grid-template-columns:1.3fr 1fr;grid-template-rows:1fr 1fr;gap:16px}
+  @media (max-width:860px){.shots{grid-template-columns:1fr;grid-template-rows:auto}}
+  .shots .card{padding:0;overflow:hidden}
+  .shots .card:first-child{grid-row:1/3}
+  .shots figcaption{padding:14px 16px;color:var(--muted2);font-size:13px;font-weight:600;border-top:1px solid var(--border)}
+  .shots img{width:100%;height:auto;object-fit:cover}
+
+  .cta-band{text-align:center;background:linear-gradient(135deg,var(--panel2),var(--panel));border:1px solid var(--border);border-radius:24px;padding:56px 24px}
+  .cta-band h2{font-size:clamp(24px,3vw,34px);margin-bottom:14px}
+  .cta-band p{color:var(--muted);max-width:480px;margin:0 auto 26px}
+
+  footer{padding:40px 0;border-top:1px solid var(--border);color:var(--muted);font-size:13px}
+  footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  footer a{color:var(--muted2);text-decoration:none}
+  footer a:hover{color:var(--cyan)}
 </style>
 </head>
 <body>
-  <div class="card">
-    <img class="logo" src="https://raw.githubusercontent.com/arslanavdo355-sys/Globale.tv-updates/main/assets/logo.jpg" alt="Globale.tv">
-    <h1>Globale.tv</h1>
-    <p>Android TV, Google TV, Fire TV ve Android kutular için ücretsiz IPTV oynatıcısı.</p>
-    <a class="btn" href="https://github.com/arslanavdo355-sys/Globale.tv-updates/releases/latest/download/Globale.tv.apk">⬇️ APK indir</a>
-    <a class="btn secondary" href="https://github.com/arslanavdo355-sys/Globale.tv-updates">Tüm bilgiler ve ekran görüntüleri</a>
-    <div class="note">Intel/x86 işlemcili kutular için ayrı sürüm GitHub sayfasındadır.</div>
+
+<header>
+  <div class="wrap">
+    <div class="brand">
+      <img src="https://raw.githubusercontent.com/arslanavdo355-sys/Globale.tv-updates/main/assets/logo.jpg" alt="Globale.tv">
+      Globale.tv
+    </div>
+    <nav class="links">
+      <a href="#indir">İndir</a>
+      <a href="#ozellikler">Özellikler</a>
+      <a href="#ekran-goruntuleri">Ekran görüntüleri</a>
+    </nav>
+    <a class="btn btn-outline" href="https://globale-hesabim-tv.netlify.app" style="padding:10px 18px;font-size:13px">Hesabım</a>
   </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="eyebrow">ücretsiz · reklamsız kurulum</div>
+    <h1>Android TV için <span class="gr">modern</span> bir IPTV deneyimi</h1>
+    <p class="lead">Kendi M3U veya Xtream listelerini ekle; canlı TV, film ve dizileri tek, hızlı, kumandayla rahat kullanılan bir arayüzden izle. Kanal veya abonelik içermez.</p>
+    <div class="ctas">
+      <a class="btn btn-primary" href="https://github.com/arslanavdo355-sys/Globale.tv-updates/releases/latest/download/Globale.tv.apk">⬇️ APK'yı indir</a>
+      <a class="btn btn-outline" href="https://github.com/arslanavdo355-sys/Globale.tv-updates#readme">Tüm bilgiler</a>
+    </div>
+    <div class="platforms">
+      <span>📺 Android TV</span>
+      <span>🔵 Google TV</span>
+      <span>🔥 Fire TV Stick</span>
+      <span>📦 Android Box</span>
+    </div>
+  </div>
+</div>
+
+<div class="wrap release">
+  <div class="card">
+    <div class="left">
+      <div class="ic">✓</div>
+      <div>
+        <div class="ttl">Güncel sürüm yayında</div>
+        <div class="sub" id="relSub">En güncel sürüm otomatik olarak indirilir</div>
+      </div>
+    </div>
+    <div class="pill" id="relPill">GLOBALE.TV</div>
+  </div>
+</div>
+
+<section id="indir">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Cihazına göre indir</h2>
+      <p>Çoğu Android TV, Google TV ve Fire TV Stick cihazı için aynı dosya çalışır.</p>
+    </div>
+    <div class="dl-grid">
+      <div class="card dl-main">
+        <h3 style="font-size:20px;margin-bottom:10px">Globale.tv.apk — çoğu cihaz</h3>
+        <p style="color:var(--muted)">Android TV, Google TV, Fire TV / Fire TV Stick ve ARM tabanlı Android kutular için.</p>
+        <div class="tags">
+          <span class="tag">Android TV</span>
+          <span class="tag">Google TV</span>
+          <span class="tag">Fire TV Stick</span>
+        </div>
+        <a class="btn btn-primary btn-block" href="https://github.com/arslanavdo355-sys/Globale.tv-updates/releases/latest/download/Globale.tv.apk">⬇️ Globale.tv.apk indir</a>
+      </div>
+      <div class="dl-side">
+        <div class="card">
+          <h3>🔥 Fire TV Stick</h3>
+          <p>Downloader uygulamasıyla kur. Adım adım anlatım aşağıda ↓</p>
+          <a class="btn btn-outline btn-block" href="#fire-tv">Kurulum adımları</a>
+        </div>
+        <div class="card">
+          <h3>Intel / x86 kutular</h3>
+          <p>Intel işlemcili Android kutular için ayrı sürüm.</p>
+          <a class="btn btn-outline btn-block" href="https://github.com/arslanavdo355-sys/Globale.tv-updates/releases/latest/download/Globale.tv-x86_64.apk">⬇️ x86_64 indir</a>
+        </div>
+        <div class="card">
+          <h3>Tek dokunuşla indirme</h3>
+          <p>Sade, tek butonlu indirme sayfası.</p>
+          <a class="btn btn-outline btn-block" href="https://github.com/arslanavdo355-sys/Globale.tv-updates/releases">Tüm sürümler</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="fire-tv" style="padding-top:0">
+  <div class="wrap">
+    <div class="card" style="padding:36px">
+      <h3 style="font-size:19px;margin-bottom:22px">🔥 Fire TV Stick'e kurulum</h3>
+      <div class="steps">
+        <div class="step"><b>1</b> Ayarlar → My Fire TV → Developer Options → Unknown Sources'ı aç</div>
+        <span class="step-arrow">→</span>
+        <div class="step"><b>2</b> Appstore'dan "Downloader" uygulamasını kur</div>
+        <span class="step-arrow">→</span>
+        <div class="step"><b>3</b> Downloader'a adresi yaz, indir, kur, aç</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="ozellikler">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Neden Globale.tv</h2>
+      <p>Hızlı, sade ve kumandayla kullanıma göre tasarlandı.</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat"><div class="n">01</div><h3>📺 Canlı TV</h3><p>EPG, kategoriler, favoriler ve kalite rozetleri (SD / HD / FHD / 4K).</p></div>
+      <div class="feat"><div class="n">02</div><h3>🔗 M3U & Xtream</h3><p>Birden fazla listeyi tek bir klasör ağacında topla.</p></div>
+      <div class="feat"><div class="n">03</div><h3>🎬 Film & Dizi</h3><p>Film, dizi ve "izlemeye devam et" desteği.</p></div>
+      <div class="feat"><div class="n">04</div><h3>📱 Telefondan yönet</h3><p>Kaynak ekleme ve ayarları web panelden telefonla yap.</p></div>
+      <div class="feat"><div class="n">05</div><h3>🌍 6 dil</h3><p>Türkçe, İngilizce, Almanca, Fransızca, Rusça, Arapça.</p></div>
+      <div class="feat"><div class="n">06</div><h3>🎮 Kumanda dostu</h3><p>Baştan sona TV kumandasıyla rahat kullanım için tasarlandı.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="ekran-goruntuleri">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Ekran görüntüleri</h2>
+      <p>Gerçek cihazdan alınmış görüntüler.</p>
+    </div>
+    <div class="shots">
+      <figure class="card">
+        <img src="https://raw.githubusercontent.com/arslanavdo355-sys/Globale.tv-updates/main/assets/screens/canli-tv-onizleme.jpg" alt="Canlı TV önizleme">
+        <figcaption>Canlı TV — önizleme ve EPG</figcaption>
+      </figure>
+      <figure class="card">
+        <img src="https://raw.githubusercontent.com/arslanavdo355-sys/Globale.tv-updates/main/assets/screens/canli-tv-menu.jpg" alt="Canlı TV menü">
+        <figcaption>Canlı TV — kanal menüsü</figcaption>
+      </figure>
+      <figure class="card">
+        <img src="https://raw.githubusercontent.com/arslanavdo355-sys/Globale.tv-updates/main/assets/screens/kanal-listesi.jpg" alt="Kanal listesi">
+        <figcaption>Kanal listesi</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="cta-band">
+      <h2>Hazır mısın?</h2>
+      <p>Kur, kendi listeni ekle, izlemeye başla. Kurulum 2 dakika sürer.</p>
+      <a class="btn btn-primary" href="https://github.com/arslanavdo355-sys/Globale.tv-updates/releases/latest/download/Globale.tv.apk">⬇️ Şimdi indir</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>© Globale.tv — <a href="https://github.com/arslanavdo355-sys/Globale.tv-updates#readme">GitHub sayfası</a></div>
+    <div><a href="https://globale-hesabim-tv.netlify.app">Hesabım (web panel)</a></div>
+  </div>
+</footer>
+
+<script>
+fetch('https://api.github.com/repos/arslanavdo355-sys/Globale.tv-updates/releases/latest')
+  .then(r=>r.ok?r.json():null)
+  .then(j=>{
+    if(!j) return;
+    const pill=document.getElementById('relPill'), sub=document.getElementById('relSub');
+    if(pill && j.tag_name) pill.textContent=j.tag_name;
+    if(sub && j.published_at){
+      const d=new Date(j.published_at);
+      sub.textContent='Yayın tarihi: '+d.toLocaleDateString('tr-TR',{day:'numeric',month:'long',year:'numeric'});
+    }
+  }).catch(()=>{});
+</script>
+
 </body>
 </html>
