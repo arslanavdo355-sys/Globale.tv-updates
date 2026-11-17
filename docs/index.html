@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Globale.tv — Android TV için ücretsiz IPTV oynatıcısı</title>
-<meta name="description" content="Globale.tv: Android TV, Google TV, Fire TV Stick ve Android kutular için ücretsiz, modern IPTV oynatıcısı. M3U ve Xtream desteği.">
+<meta name="description" content="Globale.tv: Android TV, Google TV, Fire TV Stick ve Android kutular için ücretsiz, modern IPTV oynatıcısı. M3U ve Xtream desteği. Türkçe, English, Deutsch, Français, Русский, العربية.">
 <meta name="keywords" content="Globale.tv, IPTV player, M3U player, Xtream player, Android TV, Google TV, Fire TV, Fire TV Stick, webOS, Downloader kodu, ücretsiz IPTV">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://arslanavdo355-sys.github.io/Globale.tv-updates/">
@@ -33,6 +33,7 @@
   .wrap{max-width:1200px;margin:0 auto;padding:0 20px}
   .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);margin-bottom:14px}
   .eyebrow::before{content:"";width:22px;height:2px;background:var(--cyan);display:inline-block;border-radius:2px}
+  [dir="rtl"] .eyebrow::before{content:none}
   h1,h2,h3{letter-spacing:-.02em;margin:0}
   .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 24px;border-radius:13px;font-weight:700;font-size:15px;text-decoration:none;transition:transform .15s,box-shadow .15s;border:1px solid transparent;white-space:nowrap}
   .btn:active{transform:scale(.98)}
@@ -41,13 +42,15 @@
   .btn-outline{background:rgba(255,255,255,.03);border-color:var(--border);color:var(--text)}
   .btn-outline:hover{transform:translateY(-2px);border-color:rgba(136,174,235,.4)}
   .btn-block{display:flex;width:100%}
+  select.langsel{background:rgba(255,255,255,.04);color:var(--text);border:1px solid var(--border);border-radius:10px;padding:9px 10px;font-size:13px;font-weight:600}
 
-  header{position:sticky;top:0;z-index:50;height:72px;display:flex;align-items:center;background:rgba(5,13,33,.75);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
-  header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px}
+  header{position:sticky;top:0;z-index:50;min-height:72px;display:flex;align-items:center;background:rgba(5,13,33,.75);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:12px;padding-bottom:12px}
   .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px}
   .brand img{width:34px;height:34px;border-radius:9px}
   nav.links{display:flex;gap:26px;font-size:14px;color:var(--muted2);font-weight:600}
   nav.links a:hover{color:var(--text)}
+  .hdr-right{display:flex;gap:10px;align-items:center}
   @media (max-width:760px){nav.links{display:none}}
 
   .hero{position:relative;min-height:560px;display:flex;align-items:center;overflow:hidden;background:
@@ -60,7 +63,6 @@
   .hero .ctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:34px}
   .platforms{display:flex;gap:22px;flex-wrap:wrap;align-items:center;color:var(--muted);font-size:13px;font-weight:600}
   .platforms span{display:flex;align-items:center;gap:7px}
-  .platforms svg{width:18px;height:18px;opacity:.85}
 
   .release{margin-top:-46px;position:relative;z-index:3}
   .release .card{display:flex;align-items:center;gap:18px;flex-wrap:wrap;justify-content:space-between;background:linear-gradient(135deg,var(--panel2),var(--panel));border:1px solid var(--border);border-radius:20px;padding:22px 26px;box-shadow:0 20px 50px rgba(0,0,0,.35)}
@@ -90,6 +92,7 @@
   .step{display:flex;align-items:center;gap:12px;color:var(--muted2);font-size:14px;font-weight:600}
   .step b{width:30px;height:30px;border-radius:999px;background:var(--grad);color:#04121c;display:flex;align-items:center;justify-content:center;font-size:14px;flex:none}
   .step-arrow{color:var(--muted);opacity:.5}
+  [dir="rtl"] .step-arrow{transform:scaleX(-1)}
 
   .feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
   @media (max-width:860px){.feat-grid{grid-template-columns:1fr}}
@@ -125,31 +128,39 @@
       Globale.tv
     </div>
     <nav class="links">
-      <a href="#indir">İndir</a>
-      <a href="#ozellikler">Özellikler</a>
-      <a href="#ekran-goruntuleri">Ekran görüntüleri</a>
+      <a href="#indir" data-t="nav_dl"></a>
+      <a href="#ozellikler" data-t="nav_feat"></a>
+      <a href="#ekran-goruntuleri" data-t="nav_shots"></a>
     </nav>
-    <div style="display:flex;gap:10px">
-      <a class="btn btn-outline" href="https://t.me/GlobaltvPlayer" style="padding:10px 18px;font-size:13px">✈️ Telegram</a>
-      <a class="btn btn-outline" href="https://globale-hesabim-tv.netlify.app" style="padding:10px 18px;font-size:13px">Hesabım</a>
+    <div class="hdr-right">
+      <select class="langsel" id="langsel">
+        <option value="tr">Türkçe</option>
+        <option value="en">English</option>
+        <option value="de">Deutsch</option>
+        <option value="fr">Français</option>
+        <option value="ru">Русский</option>
+        <option value="ar">العربية</option>
+      </select>
+      <a class="btn btn-outline" href="https://t.me/GlobaltvPlayer" style="padding:10px 14px;font-size:13px">✈️ Telegram</a>
+      <a class="btn btn-outline" href="https://globale-hesabim-tv.netlify.app" style="padding:10px 14px;font-size:13px" data-t="nav_account"></a>
     </div>
   </div>
 </header>
 
 <div class="hero">
   <div class="wrap">
-    <div class="eyebrow">ücretsiz · reklamsız kurulum</div>
-    <h1>Android TV için <span class="gr">modern</span> bir IPTV deneyimi</h1>
-    <p class="lead">Kendi M3U veya Xtream listelerini ekle; canlı TV, film ve dizileri tek, hızlı, kumandayla rahat kullanılan bir arayüzden izle. Kanal veya abonelik içermez.</p>
+    <div class="eyebrow" data-t="eyebrow"></div>
+    <h1><span data-t="h1a"></span> <span class="gr" data-t="h1b"></span> <span data-t="h1c"></span></h1>
+    <p class="lead" data-t="lead"></p>
     <div class="ctas">
-      <a class="btn btn-primary" href="https://github.com/arslanavdo355-sys/Globale.tv-updates/releases/latest/download/Globale.tv.apk">⬇️ APK'yı indir</a>
-      <a class="btn btn-outline" href="https://github.com/arslanavdo355-sys/Globale.tv-updates#readme">Tüm bilgiler</a>
+      <a class="btn btn-primary" href="https://github.com/arslanavdo355-sys/Globale.tv-updates/releases/latest/download/Globale.tv.apk">⬇️ <span data-t="cta_primary"></span></a>
+      <a class="btn btn-outline" href="https://github.com/arslanavdo355-sys/Globale.tv-updates#readme" data-t="cta_secondary"></a>
     </div>
     <div class="platforms">
-      <span>📺 Android TV</span>
-      <span>🔵 Google TV</span>
-      <span>🔥 Fire TV Stick</span>
-      <span>📦 Android Box</span>
+      <span>📺 <span data-t="plat_atv"></span></span>
+      <span>🔵 <span data-t="plat_gtv"></span></span>
+      <span>🔥 <span data-t="plat_ftv"></span></span>
+      <span>📦 <span data-t="plat_box"></span></span>
     </div>
   </div>
 </div>
@@ -159,8 +170,8 @@
     <div class="left">
       <div class="ic">✓</div>
       <div>
-        <div class="ttl">Güncel sürüm yayında</div>
-        <div class="sub" id="relSub">En güncel sürüm otomatik olarak indirilir</div>
+        <div class="ttl" data-t="rel_title"></div>
+        <div class="sub" id="relSub" data-t="rel_sub"></div>
       </div>
     </div>
     <div class="pill" id="relPill">GLOBALE.TV</div>
@@ -170,35 +181,35 @@
 <section id="indir">
   <div class="wrap">
     <div class="section-head">
-      <h2>Cihazına göre indir</h2>
-      <p>Çoğu Android TV, Google TV ve Fire TV Stick cihazı için aynı dosya çalışır.</p>
+      <h2 data-t="dl_head_h2"></h2>
+      <p data-t="dl_head_p"></p>
     </div>
     <div class="dl-grid">
       <div class="card dl-main">
-        <h3 style="font-size:20px;margin-bottom:10px">Globale.tv.apk — çoğu cihaz</h3>
-        <p style="color:var(--muted)">Android TV, Google TV, Fire TV / Fire TV Stick ve ARM tabanlı Android kutular için.</p>
+        <h3 style="font-size:20px;margin-bottom:10px" data-t="dl_main_h3"></h3>
+        <p style="color:var(--muted)" data-t="dl_main_p"></p>
         <div class="tags">
-          <span class="tag">Android TV</span>
-          <span class="tag">Google TV</span>
-          <span class="tag">Fire TV Stick</span>
+          <span class="tag" data-t="plat_atv"></span>
+          <span class="tag" data-t="plat_gtv"></span>
+          <span class="tag" data-t="plat_ftv"></span>
         </div>
-        <a class="btn btn-primary btn-block" href="https://github.com/arslanavdo355-sys/Globale.tv-updates/releases/latest/download/Globale.tv.apk">⬇️ Globale.tv.apk indir</a>
+        <a class="btn btn-primary btn-block" href="https://github.com/arslanavdo355-sys/Globale.tv-updates/releases/latest/download/Globale.tv.apk">⬇️ <span data-t="dl_main_btn"></span></a>
       </div>
       <div class="dl-side">
         <div class="card">
-          <h3>🔥 Fire TV Stick</h3>
-          <p>Downloader uygulamasıyla kur. Adım adım anlatım aşağıda ↓</p>
-          <a class="btn btn-outline btn-block" href="#fire-tv">Kurulum adımları</a>
+          <h3>🔥 <span data-t="plat_ftv"></span></h3>
+          <p data-t="side_fire_p"></p>
+          <a class="btn btn-outline btn-block" href="#fire-tv" data-t="side_fire_btn"></a>
         </div>
         <div class="card">
-          <h3>Intel / x86 kutular</h3>
-          <p>Intel işlemcili Android kutular için ayrı sürüm.</p>
-          <a class="btn btn-outline btn-block" href="https://github.com/arslanavdo355-sys/Globale.tv-updates/releases/latest/download/Globale.tv-x86_64.apk">⬇️ x86_64 indir</a>
+          <h3 data-t="side_x86_h3"></h3>
+          <p data-t="side_x86_p"></p>
+          <a class="btn btn-outline btn-block" href="https://github.com/arslanavdo355-sys/Globale.tv-updates/releases/latest/download/Globale.tv-x86_64.apk">⬇️ <span data-t="side_x86_btn"></span></a>
         </div>
         <div class="card">
-          <h3>Tek dokunuşla indirme</h3>
-          <p>Sade, tek butonlu indirme sayfası.</p>
-          <a class="btn btn-outline btn-block" href="https://github.com/arslanavdo355-sys/Globale.tv-updates/releases">Tüm sürümler</a>
+          <h3 data-t="side_one_h3"></h3>
+          <p data-t="side_one_p"></p>
+          <a class="btn btn-outline btn-block" href="https://github.com/arslanavdo355-sys/Globale.tv-updates/releases" data-t="side_one_btn"></a>
         </div>
       </div>
     </div>
@@ -208,18 +219,18 @@
 <section id="fire-tv" style="padding-top:0">
   <div class="wrap">
     <div class="card" style="padding:36px">
-      <h3 style="font-size:19px;margin-bottom:22px">🔥 Fire TV Stick'e kurulum</h3>
+      <h3 style="font-size:19px;margin-bottom:22px">🔥 <span data-t="firetv_h3"></span></h3>
       <div class="steps">
-        <div class="step"><b>1</b> Ayarlar → My Fire TV → Developer Options → Unknown Sources'ı aç</div>
+        <div class="step"><b>1</b> <span data-t="step1"></span></div>
         <span class="step-arrow">→</span>
-        <div class="step"><b>2</b> Appstore'dan "Downloader" uygulamasını kur</div>
+        <div class="step"><b>2</b> <span data-t="step2"></span></div>
         <span class="step-arrow">→</span>
-        <div class="step"><b>3</b> Downloader'a adresi yaz, indir, kur, aç</div>
+        <div class="step"><b>3</b> <span data-t="step3"></span></div>
       </div>
       <div style="margin-top:22px;display:flex;align-items:center;gap:14px;flex-wrap:wrap">
-        <span style="color:var(--muted);font-size:13px">Downloader'a kod yaz:</span>
+        <span style="color:var(--muted);font-size:13px" data-t="code_label"></span>
         <span class="pill">5881297</span>
-        <span style="color:var(--muted);font-size:13px">veya adres:</span>
+        <span style="color:var(--muted);font-size:13px" data-t="or_address_label"></span>
         <span class="pill">is.gd/globaletvapk</span>
       </div>
     </div>
@@ -229,16 +240,16 @@
 <section id="ozellikler">
   <div class="wrap">
     <div class="section-head">
-      <h2>Neden Globale.tv</h2>
-      <p>Hızlı, sade ve kumandayla kullanıma göre tasarlandı.</p>
+      <h2 data-t="feat_head_h2"></h2>
+      <p data-t="feat_head_p"></p>
     </div>
     <div class="feat-grid">
-      <div class="feat"><div class="n">01</div><h3>📺 Canlı TV</h3><p>EPG, kategoriler, favoriler ve kalite rozetleri (SD / HD / FHD / 4K).</p></div>
-      <div class="feat"><div class="n">02</div><h3>🔗 M3U & Xtream</h3><p>Birden fazla listeyi tek bir klasör ağacında topla.</p></div>
-      <div class="feat"><div class="n">03</div><h3>🎬 Film & Dizi</h3><p>Film, dizi ve "izlemeye devam et" desteği.</p></div>
-      <div class="feat"><div class="n">04</div><h3>📱 Telefondan yönet</h3><p>Kaynak ekleme ve ayarları web panelden telefonla yap.</p></div>
-      <div class="feat"><div class="n">05</div><h3>🌍 6 dil</h3><p>Türkçe, İngilizce, Almanca, Fransızca, Rusça, Arapça.</p></div>
-      <div class="feat"><div class="n">06</div><h3>🎮 Kumanda dostu</h3><p>Baştan sona TV kumandasıyla rahat kullanım için tasarlandı.</p></div>
+      <div class="feat"><div class="n">01</div><h3>📺 <span data-t="feat1_t"></span></h3><p data-t="feat1_p"></p></div>
+      <div class="feat"><div class="n">02</div><h3>🔗 <span data-t="feat2_t"></span></h3><p data-t="feat2_p"></p></div>
+      <div class="feat"><div class="n">03</div><h3>🎬 <span data-t="feat3_t"></span></h3><p data-t="feat3_p"></p></div>
+      <div class="feat"><div class="n">04</div><h3>📱 <span data-t="feat4_t"></span></h3><p data-t="feat4_p"></p></div>
+      <div class="feat"><div class="n">05</div><h3>🌍 <span data-t="feat5_t"></span></h3><p data-t="feat5_p"></p></div>
+      <div class="feat"><div class="n">06</div><h3>🎮 <span data-t="feat6_t"></span></h3><p data-t="feat6_p"></p></div>
     </div>
   </div>
 </section>
@@ -246,21 +257,21 @@
 <section id="ekran-goruntuleri">
   <div class="wrap">
     <div class="section-head">
-      <h2>Ekran görüntüleri</h2>
-      <p>Gerçek cihazdan alınmış görüntüler.</p>
+      <h2 data-t="shots_head_h2"></h2>
+      <p data-t="shots_head_p"></p>
     </div>
     <div class="shots">
       <figure class="card">
-        <img src="https://raw.githubusercontent.com/arslanavdo355-sys/Globale.tv-updates/main/assets/screens/canli-tv-onizleme.jpg" alt="Canlı TV önizleme">
-        <figcaption>Canlı TV — önizleme ve EPG</figcaption>
+        <img src="https://raw.githubusercontent.com/arslanavdo355-sys/Globale.tv-updates/main/assets/screens/canli-tv-onizleme.jpg" alt="Globale.tv">
+        <figcaption data-t="shot1_cap"></figcaption>
       </figure>
       <figure class="card">
-        <img src="https://raw.githubusercontent.com/arslanavdo355-sys/Globale.tv-updates/main/assets/screens/canli-tv-menu.jpg" alt="Canlı TV menü">
-        <figcaption>Canlı TV — kanal menüsü</figcaption>
+        <img src="https://raw.githubusercontent.com/arslanavdo355-sys/Globale.tv-updates/main/assets/screens/canli-tv-menu.jpg" alt="Globale.tv">
+        <figcaption data-t="shot2_cap"></figcaption>
       </figure>
       <figure class="card">
-        <img src="https://raw.githubusercontent.com/arslanavdo355-sys/Globale.tv-updates/main/assets/screens/kanal-listesi.jpg" alt="Kanal listesi">
-        <figcaption>Kanal listesi</figcaption>
+        <img src="https://raw.githubusercontent.com/arslanavdo355-sys/Globale.tv-updates/main/assets/screens/kanal-listesi.jpg" alt="Globale.tv">
+        <figcaption data-t="shot3_cap"></figcaption>
       </figure>
     </div>
   </div>
@@ -269,34 +280,218 @@
 <section>
   <div class="wrap">
     <div class="cta-band">
-      <h2>Hazır mısın?</h2>
-      <p>Kur, kendi listeni ekle, izlemeye başla. Kurulum 2 dakika sürer.</p>
-      <a class="btn btn-primary" href="https://github.com/arslanavdo355-sys/Globale.tv-updates/releases/latest/download/Globale.tv.apk">⬇️ Şimdi indir</a>
+      <h2 data-t="cta_h2"></h2>
+      <p data-t="cta_p"></p>
+      <a class="btn btn-primary" href="https://github.com/arslanavdo355-sys/Globale.tv-updates/releases/latest/download/Globale.tv.apk">⬇️ <span data-t="cta_btn"></span></a>
     </div>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
-    <div>© Globale.tv — <a href="https://github.com/arslanavdo355-sys/Globale.tv-updates#readme">GitHub sayfası</a></div>
+    <div>© Globale.tv — <a href="https://github.com/arslanavdo355-sys/Globale.tv-updates#readme" data-t="footer_github"></a></div>
     <div style="display:flex;gap:18px">
       <a href="https://t.me/GlobaltvPlayer">✈️ Telegram</a>
-      <a href="https://globale-hesabim-tv.netlify.app">Hesabım (web panel)</a>
+      <a href="https://globale-hesabim-tv.netlify.app" data-t="footer_account"></a>
     </div>
   </div>
 </footer>
 
 <script>
+const I18N = {
+tr:{nav_dl:"İndir",nav_feat:"Özellikler",nav_shots:"Ekran görüntüleri",nav_account:"Hesabım",
+ eyebrow:"ücretsiz · reklamsız kurulum",h1a:"Android TV için",h1b:"modern",h1c:"bir IPTV deneyimi",
+ lead:"Kendi M3U veya Xtream listelerini ekle; canlı TV, film ve dizileri tek, hızlı, kumandayla rahat kullanılan bir arayüzden izle. Kanal veya abonelik içermez.",
+ cta_primary:"APK'yı indir",cta_secondary:"Tüm bilgiler",
+ plat_atv:"Android TV",plat_gtv:"Google TV",plat_ftv:"Fire TV Stick",plat_box:"Android Box",
+ rel_title:"Güncel sürüm yayında",rel_sub:"En güncel sürüm otomatik olarak indirilir",
+ dl_head_h2:"Cihazına göre indir",dl_head_p:"Çoğu Android TV, Google TV ve Fire TV Stick cihazı için aynı dosya çalışır.",
+ dl_main_h3:"Globale.tv.apk — çoğu cihaz",dl_main_p:"Android TV, Google TV, Fire TV / Fire TV Stick ve ARM tabanlı Android kutular için.",dl_main_btn:"Globale.tv.apk indir",
+ side_fire_p:"Downloader uygulamasıyla kur. Adım adım anlatım aşağıda ↓",side_fire_btn:"Kurulum adımları",
+ side_x86_h3:"Intel / x86 kutular",side_x86_p:"Intel işlemcili Android kutular için ayrı sürüm.",side_x86_btn:"x86_64 indir",
+ side_one_h3:"Tüm sürümler",side_one_p:"Eski sürümler ve tüm dosyalar GitHub'da.",side_one_btn:"Sürümleri gör",
+ firetv_h3:"Fire TV Stick'e kurulum",
+ step1:"Ayarlar → My Fire TV → Developer Options → Unknown Sources'ı aç",
+ step2:"Appstore'dan \"Downloader\" uygulamasını kur",
+ step3:"Downloader'a adresi yaz, indir, kur, aç",
+ code_label:"Downloader'a kod yaz:",or_address_label:"veya adres:",
+ feat_head_h2:"Neden Globale.tv",feat_head_p:"Hızlı, sade ve kumandayla kullanıma göre tasarlandı.",
+ feat1_t:"Canlı TV",feat1_p:"EPG, kategoriler, favoriler ve kalite rozetleri (SD / HD / FHD / 4K).",
+ feat2_t:"M3U & Xtream",feat2_p:"Birden fazla listeyi tek bir klasör ağacında topla.",
+ feat3_t:"Film & Dizi",feat3_p:"Film, dizi ve \"izlemeye devam et\" desteği.",
+ feat4_t:"Telefondan yönet",feat4_p:"Kaynak ekleme ve ayarları web panelden telefonla yap.",
+ feat5_t:"6 dil",feat5_p:"Türkçe, İngilizce, Almanca, Fransızca, Rusça, Arapça.",
+ feat6_t:"Kumanda dostu",feat6_p:"Baştan sona TV kumandasıyla rahat kullanım için tasarlandı.",
+ shots_head_h2:"Ekran görüntüleri",shots_head_p:"Gerçek cihazdan alınmış görüntüler.",
+ shot1_cap:"Canlı TV — önizleme ve EPG",shot2_cap:"Canlı TV — kanal menüsü",shot3_cap:"Kanal listesi",
+ cta_h2:"Hazır mısın?",cta_p:"Kur, kendi listeni ekle, izlemeye başla. Kurulum 2 dakika sürer.",cta_btn:"Şimdi indir",
+ footer_github:"GitHub sayfası",footer_account:"Hesabım (web panel)"},
+en:{nav_dl:"Download",nav_feat:"Features",nav_shots:"Screenshots",nav_account:"My Account",
+ eyebrow:"free · no ads to install",h1a:"A",h1b:"modern",h1c:"IPTV experience for Android TV",
+ lead:"Add your own M3U or Xtream playlists; watch live TV, movies and series from one fast, remote-friendly interface. No channels or subscription included.",
+ cta_primary:"Download APK",cta_secondary:"Full info",
+ plat_atv:"Android TV",plat_gtv:"Google TV",plat_ftv:"Fire TV Stick",plat_box:"Android Box",
+ rel_title:"Latest version is live",rel_sub:"The newest version downloads automatically",
+ dl_head_h2:"Download for your device",dl_head_p:"The same file works on most Android TV, Google TV and Fire TV Stick devices.",
+ dl_main_h3:"Globale.tv.apk — most devices",dl_main_p:"For Android TV, Google TV, Fire TV / Fire TV Stick and ARM-based Android boxes.",dl_main_btn:"Download Globale.tv.apk",
+ side_fire_p:"Install with the Downloader app. Step-by-step guide below ↓",side_fire_btn:"Installation steps",
+ side_x86_h3:"Intel / x86 boxes",side_x86_p:"Separate build for Intel-based Android boxes.",side_x86_btn:"Download x86_64",
+ side_one_h3:"All versions",side_one_p:"Older versions and every file, on GitHub.",side_one_btn:"View releases",
+ firetv_h3:"Install on Fire TV Stick",
+ step1:"Settings → My Fire TV → Developer Options → turn on Unknown Sources",
+ step2:"Install \"Downloader\" from the Appstore",
+ step3:"Type the address into Downloader, install, open",
+ code_label:"Code for Downloader:",or_address_label:"or address:",
+ feat_head_h2:"Why Globale.tv",feat_head_p:"Fast, simple, and built for the TV remote.",
+ feat1_t:"Live TV",feat1_p:"EPG, categories, favourites and quality badges (SD / HD / FHD / 4K).",
+ feat2_t:"M3U & Xtream",feat2_p:"Combine several playlists in one folder tree.",
+ feat3_t:"Movies & Series",feat3_p:"Movies, series and continue-watching support.",
+ feat4_t:"Manage from your phone",feat4_p:"Add sources and change settings from the web panel on your phone.",
+ feat5_t:"6 languages",feat5_p:"Turkish, English, German, French, Russian, Arabic.",
+ feat6_t:"Remote-friendly",feat6_p:"Designed to be used comfortably with a TV remote, start to finish.",
+ shots_head_h2:"Screenshots",shots_head_p:"Real screenshots from a real device.",
+ shot1_cap:"Live TV — preview & EPG",shot2_cap:"Live TV — channel menu",shot3_cap:"Channel list",
+ cta_h2:"Ready?",cta_p:"Install, add your own list, start watching. Setup takes 2 minutes.",cta_btn:"Download now",
+ footer_github:"GitHub page",footer_account:"My account (web panel)"},
+de:{nav_dl:"Download",nav_feat:"Funktionen",nav_shots:"Screenshots",nav_account:"Mein Konto",
+ eyebrow:"kostenlos · werbefreie Installation",h1a:"Ein",h1b:"modernes",h1c:"IPTV-Erlebnis für Android TV",
+ lead:"Füge deine eigenen M3U- oder Xtream-Listen hinzu; schau Live-TV, Filme und Serien über eine schnelle, fernbedienungsfreundliche Oberfläche. Ohne Sender oder Abo.",
+ cta_primary:"APK herunterladen",cta_secondary:"Alle Infos",
+ plat_atv:"Android TV",plat_gtv:"Google TV",plat_ftv:"Fire TV Stick",plat_box:"Android-Box",
+ rel_title:"Aktuelle Version ist live",rel_sub:"Die neueste Version wird automatisch geladen",
+ dl_head_h2:"Für dein Gerät herunterladen",dl_head_p:"Dieselbe Datei funktioniert auf den meisten Android TV-, Google TV- und Fire TV Stick-Geräten.",
+ dl_main_h3:"Globale.tv.apk — die meisten Geräte",dl_main_p:"Für Android TV, Google TV, Fire TV / Fire TV Stick und ARM-basierte Android-Boxen.",dl_main_btn:"Globale.tv.apk herunterladen",
+ side_fire_p:"Mit der Downloader-App installieren. Anleitung unten ↓",side_fire_btn:"Installationsschritte",
+ side_x86_h3:"Intel-/x86-Boxen",side_x86_p:"Eigene Version für Android-Boxen mit Intel-Prozessor.",side_x86_btn:"x86_64 herunterladen",
+ side_one_h3:"Alle Versionen",side_one_p:"Ältere Versionen und alle Dateien auf GitHub.",side_one_btn:"Releases ansehen",
+ firetv_h3:"Installation auf Fire TV Stick",
+ step1:"Einstellungen → My Fire TV → Entwickleroptionen → Unbekannte Quellen aktivieren",
+ step2:"„Downloader“ aus dem Appstore installieren",
+ step3:"Adresse in Downloader eingeben, herunterladen, installieren, öffnen",
+ code_label:"Code für Downloader:",or_address_label:"oder Adresse:",
+ feat_head_h2:"Warum Globale.tv",feat_head_p:"Schnell, einfach und für die Fernbedienung gemacht.",
+ feat1_t:"Live-TV",feat1_p:"EPG, Kategorien, Favoriten und Qualitäts-Badges (SD / HD / FHD / 4K).",
+ feat2_t:"M3U & Xtream",feat2_p:"Mehrere Listen in einem Ordnerbaum zusammenfassen.",
+ feat3_t:"Filme & Serien",feat3_p:"Filme, Serien und „Weiterschauen“-Unterstützung.",
+ feat4_t:"Vom Handy aus verwalten",feat4_p:"Quellen hinzufügen und Einstellungen im Web-Panel per Handy ändern.",
+ feat5_t:"6 Sprachen",feat5_p:"Türkisch, Englisch, Deutsch, Französisch, Russisch, Arabisch.",
+ feat6_t:"Fernbedienungsfreundlich",feat6_p:"Von Anfang bis Ende für die komfortable Nutzung mit der TV-Fernbedienung entwickelt.",
+ shots_head_h2:"Screenshots",shots_head_p:"Echte Aufnahmen von einem echten Gerät.",
+ shot1_cap:"Live-TV — Vorschau & EPG",shot2_cap:"Live-TV — Senderliste",shot3_cap:"Senderliste",
+ cta_h2:"Bereit?",cta_p:"Installieren, eigene Liste hinzufügen, loslegen. Einrichtung dauert 2 Minuten.",cta_btn:"Jetzt herunterladen",
+ footer_github:"GitHub-Seite",footer_account:"Mein Konto (Web-Panel)"},
+fr:{nav_dl:"Télécharger",nav_feat:"Fonctionnalités",nav_shots:"Captures d'écran",nav_account:"Mon compte",
+ eyebrow:"gratuit · installation sans pub",h1a:"Une expérience IPTV",h1b:"moderne",h1c:"pour Android TV",
+ lead:"Ajoute tes propres listes M3U ou Xtream ; regarde la TV en direct, des films et des séries depuis une interface rapide, pensée pour la télécommande. Sans chaînes ni abonnement inclus.",
+ cta_primary:"Télécharger l'APK",cta_secondary:"Toutes les infos",
+ plat_atv:"Android TV",plat_gtv:"Google TV",plat_ftv:"Fire TV Stick",plat_box:"Boîtier Android",
+ rel_title:"Dernière version en ligne",rel_sub:"La dernière version se télécharge automatiquement",
+ dl_head_h2:"Télécharger pour ton appareil",dl_head_p:"Le même fichier fonctionne sur la plupart des appareils Android TV, Google TV et Fire TV Stick.",
+ dl_main_h3:"Globale.tv.apk — la plupart des appareils",dl_main_p:"Pour Android TV, Google TV, Fire TV / Fire TV Stick et boîtiers Android ARM.",dl_main_btn:"Télécharger Globale.tv.apk",
+ side_fire_p:"Installe avec l'application Downloader. Étapes ci-dessous ↓",side_fire_btn:"Étapes d'installation",
+ side_x86_h3:"Boîtiers Intel / x86",side_x86_p:"Version séparée pour boîtiers Android à processeur Intel.",side_x86_btn:"Télécharger x86_64",
+ side_one_h3:"Toutes les versions",side_one_p:"Anciennes versions et tous les fichiers sur GitHub.",side_one_btn:"Voir les versions",
+ firetv_h3:"Installation sur Fire TV Stick",
+ step1:"Paramètres → My Fire TV → Options développeur → activer Sources inconnues",
+ step2:"Installe « Downloader » depuis l'Appstore",
+ step3:"Saisis l'adresse dans Downloader, télécharge, installe, ouvre",
+ code_label:"Code pour Downloader :",or_address_label:"ou adresse :",
+ feat_head_h2:"Pourquoi Globale.tv",feat_head_p:"Rapide, simple, pensé pour la télécommande.",
+ feat1_t:"TV en direct",feat1_p:"EPG, catégories, favoris et badges de qualité (SD / HD / FHD / 4K).",
+ feat2_t:"M3U & Xtream",feat2_p:"Regroupe plusieurs listes dans une seule arborescence.",
+ feat3_t:"Films & Séries",feat3_p:"Films, séries et reprise de lecture.",
+ feat4_t:"Gérer depuis ton téléphone",feat4_p:"Ajoute des sources et modifie les réglages depuis le panneau web sur ton téléphone.",
+ feat5_t:"6 langues",feat5_p:"Turc, anglais, allemand, français, russe, arabe.",
+ feat6_t:"Pensé télécommande",feat6_p:"Conçu pour une utilisation confortable avec la télécommande du téléviseur, du début à la fin.",
+ shots_head_h2:"Captures d'écran",shots_head_p:"Vraies captures prises sur un vrai appareil.",
+ shot1_cap:"TV en direct — aperçu et EPG",shot2_cap:"TV en direct — menu des chaînes",shot3_cap:"Liste des chaînes",
+ cta_h2:"Prêt ?",cta_p:"Installe, ajoute ta liste, regarde. L'installation prend 2 minutes.",cta_btn:"Télécharger maintenant",
+ footer_github:"Page GitHub",footer_account:"Mon compte (panneau web)"},
+ru:{nav_dl:"Скачать",nav_feat:"Возможности",nav_shots:"Скриншоты",nav_account:"Мой аккаунт",
+ eyebrow:"бесплатно · установка без рекламы",h1a:"Современный",h1b:"IPTV",h1c:"опыт для Android TV",
+ lead:"Добавь свои плейлисты M3U или Xtream; смотри прямые трансляции, фильмы и сериалы в едином быстром интерфейсе, удобном для пульта. Без каналов и подписки.",
+ cta_primary:"Скачать APK",cta_secondary:"Вся информация",
+ plat_atv:"Android TV",plat_gtv:"Google TV",plat_ftv:"Fire TV Stick",plat_box:"Android-приставка",
+ rel_title:"Доступна последняя версия",rel_sub:"Последняя версия скачивается автоматически",
+ dl_head_h2:"Скачать для своего устройства",dl_head_p:"Один и тот же файл подходит для большинства устройств Android TV, Google TV и Fire TV Stick.",
+ dl_main_h3:"Globale.tv.apk — большинство устройств",dl_main_p:"Для Android TV, Google TV, Fire TV / Fire TV Stick и ARM-приставок на Android.",dl_main_btn:"Скачать Globale.tv.apk",
+ side_fire_p:"Установи через приложение Downloader. Инструкция ниже ↓",side_fire_btn:"Шаги установки",
+ side_x86_h3:"Приставки Intel / x86",side_x86_p:"Отдельная версия для Android-приставок на процессорах Intel.",side_x86_btn:"Скачать x86_64",
+ side_one_h3:"Все версии",side_one_p:"Старые версии и все файлы на GitHub.",side_one_btn:"Смотреть релизы",
+ firetv_h3:"Установка на Fire TV Stick",
+ step1:"Настройки → My Fire TV → Параметры разработчика → включить «Неизвестные источники»",
+ step2:"Установи «Downloader» из Appstore",
+ step3:"Введи адрес в Downloader, скачай, установи, открой",
+ code_label:"Код для Downloader:",or_address_label:"или адрес:",
+ feat_head_h2:"Почему Globale.tv",feat_head_p:"Быстро, просто и удобно с пультом.",
+ feat1_t:"Прямой эфир",feat1_p:"EPG, категории, избранное и значки качества (SD / HD / FHD / 4K).",
+ feat2_t:"M3U и Xtream",feat2_p:"Объедини несколько плейлистов в одном дереве папок.",
+ feat3_t:"Фильмы и сериалы",feat3_p:"Фильмы, сериалы и продолжение просмотра.",
+ feat4_t:"Управление с телефона",feat4_p:"Добавляй источники и меняй настройки через веб-панель с телефона.",
+ feat5_t:"6 языков",feat5_p:"Турецкий, английский, немецкий, французский, русский, арабский.",
+ feat6_t:"Удобно с пультом",feat6_p:"Создано для комфортного использования с пультом ТВ от начала до конца.",
+ shots_head_h2:"Скриншоты",shots_head_p:"Реальные снимки с реального устройства.",
+ shot1_cap:"Прямой эфир — превью и EPG",shot2_cap:"Прямой эфир — меню каналов",shot3_cap:"Список каналов",
+ cta_h2:"Готовы?",cta_p:"Установи, добавь свой плейлист, начни смотреть. Настройка занимает 2 минуты.",cta_btn:"Скачать сейчас",
+ footer_github:"Страница GitHub",footer_account:"Мой аккаунт (веб-панель)"},
+ar:{nav_dl:"تحميل",nav_feat:"المزايا",nav_shots:"لقطات الشاشة",nav_account:"حسابي",
+ eyebrow:"مجاني · تثبيت بدون إعلانات",h1a:"تجربة IPTV",h1b:"حديثة",h1c:"لأجهزة Android TV",
+ lead:"أضف قوائم M3U أو Xtream الخاصة بك؛ شاهد البث المباشر والأفلام والمسلسلات من واجهة واحدة سريعة وسهلة الاستخدام بجهاز التحكم. بدون قنوات أو اشتراك.",
+ cta_primary:"تحميل APK",cta_secondary:"كل المعلومات",
+ plat_atv:"Android TV",plat_gtv:"Google TV",plat_ftv:"Fire TV Stick",plat_box:"صندوق أندرويد",
+ rel_title:"أحدث إصدار متاح الآن",rel_sub:"يتم تنزيل أحدث إصدار تلقائياً",
+ dl_head_h2:"نزّل حسب جهازك",dl_head_p:"نفس الملف يعمل على معظم أجهزة Android TV وGoogle TV وFire TV Stick.",
+ dl_main_h3:"Globale.tv.apk — معظم الأجهزة",dl_main_p:"لأجهزة Android TV وGoogle TV وFire TV / Fire TV Stick وصناديق أندرويد ARM.",dl_main_btn:"تحميل Globale.tv.apk",
+ side_fire_p:"ثبّته عبر تطبيق Downloader. الخطوات بالأسفل ↓",side_fire_btn:"خطوات التثبيت",
+ side_x86_h3:"صناديق Intel / x86",side_x86_p:"إصدار منفصل لصناديق أندرويد بمعالج Intel.",side_x86_btn:"تحميل x86_64",
+ side_one_h3:"كل الإصدارات",side_one_p:"الإصدارات القديمة وكل الملفات على GitHub.",side_one_btn:"عرض الإصدارات",
+ firetv_h3:"التثبيت على Fire TV Stick",
+ step1:"الإعدادات ← My Fire TV ← خيارات المطوّر ← تفعيل المصادر غير المعروفة",
+ step2:"ثبّت تطبيق \"Downloader\" من Appstore",
+ step3:"اكتب العنوان في Downloader، نزّل، ثبّت، افتح",
+ code_label:"رمز Downloader:",or_address_label:"أو العنوان:",
+ feat_head_h2:"لماذا Globale.tv",feat_head_p:"سريع وبسيط ومصمم لجهاز التحكم.",
+ feat1_t:"البث المباشر",feat1_p:"دليل برامج EPG، فئات، مفضلة، وشارات جودة (SD / HD / FHD / 4K).",
+ feat2_t:"M3U وXtream",feat2_p:"اجمع عدة قوائم في شجرة مجلدات واحدة.",
+ feat3_t:"أفلام ومسلسلات",feat3_p:"أفلام ومسلسلات ودعم متابعة المشاهدة.",
+ feat4_t:"الإدارة من هاتفك",feat4_p:"أضف مصادر وغيّر الإعدادات من لوحة الويب عبر هاتفك.",
+ feat5_t:"6 لغات",feat5_p:"التركية والإنجليزية والألمانية والفرنسية والروسية والعربية.",
+ feat6_t:"مناسب لجهاز التحكم",feat6_p:"مصمم للاستخدام المريح بجهاز تحكم التلفاز من البداية للنهاية.",
+ shots_head_h2:"لقطات الشاشة",shots_head_p:"لقطات حقيقية من جهاز حقيقي.",
+ shot1_cap:"البث المباشر — معاينة ودليل البرامج",shot2_cap:"البث المباشر — قائمة القنوات",shot3_cap:"قائمة القنوات",
+ cta_h2:"هل أنت مستعد؟",cta_p:"ثبّت، أضف قائمتك، وابدأ المشاهدة. يستغرق الإعداد دقيقتين.",cta_btn:"نزّل الآن",
+ footer_github:"صفحة GitHub",footer_account:"حسابي (لوحة الويب)"}
+};
+const RTL = {ar:1};
+function applyLang(l){
+  const d = I18N[l] || I18N.tr;
+  document.querySelectorAll('[data-t]').forEach(el=>{
+    const k = el.getAttribute('data-t');
+    if(d[k] !== undefined) el.textContent = d[k];
+  });
+  document.documentElement.lang = l;
+  document.documentElement.dir = RTL[l] ? 'rtl' : 'ltr';
+  try{ localStorage.setItem('globaletv_lang', l); }catch(e){}
+  const sel = document.getElementById('langsel');
+  if(sel) sel.value = l;
+}
+function pickDefaultLang(){
+  try{
+    const saved = localStorage.getItem('globaletv_lang');
+    if(saved && I18N[saved]) return saved;
+  }catch(e){}
+  const nav = (navigator.language||'tr').slice(0,2).toLowerCase();
+  return I18N[nav] ? nav : 'tr';
+}
+applyLang(pickDefaultLang());
+document.getElementById('langsel').addEventListener('change', e=>applyLang(e.target.value));
+
 fetch('https://api.github.com/repos/arslanavdo355-sys/Globale.tv-updates/releases/latest')
   .then(r=>r.ok?r.json():null)
   .then(j=>{
     if(!j) return;
-    const pill=document.getElementById('relPill'), sub=document.getElementById('relSub');
+    const pill=document.getElementById('relPill');
     if(pill && j.tag_name) pill.textContent=j.tag_name;
-    if(sub && j.published_at){
-      const d=new Date(j.published_at);
-      sub.textContent='Yayın tarihi: '+d.toLocaleDateString('tr-TR',{day:'numeric',month:'long',year:'numeric'});
-    }
   }).catch(()=>{});
 </script>
 
