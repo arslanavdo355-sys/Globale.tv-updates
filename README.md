@@ -13,9 +13,10 @@ Kendi M3U veya Xtream listelerini ekle; canlı TV, film ve dizileri kumandayla r
 
 | Device / Cihaz | How / Nasıl |
 |---|---|
-| Android TV, Google TV, Fire TV | Install **Downloader**, enter code **XXXXXXX** or the link above / **Downloader**'ı kur, **XXXXXXX** kodunu ya da yukarıdaki linki gir |
+| Android TV, Google TV | Install **Downloader**, enter code **XXXXXXX** or the link above / **Downloader**'ı kur, **XXXXXXX** kodunu ya da yukarıdaki linki gir |
+| Amazon Fire TV / Fire TV Stick | Install **Downloader** from the Appstore, enter code **XXXXXXX** or the link above / Appstore'dan **Downloader**'ı kur, **XXXXXXX** kodunu ya da yukarıdaki linki gir |
 | Android phone / box | Open the link above in the browser / Linki tarayıcıda aç |
-| LG webOS | Coming soon / Yakında |
+| LG webOS | In development, coming soon / Geliştiriliyor, yakında |
 
 ## Screenshots / Ekran görüntüleri
 
@@ -33,4 +34,7 @@ Kendi M3U veya Xtream listelerini ekle; canlı TV, film ve dizileri kumandayla r
 - Six languages: Turkish, English, German, French, Russian, Arabic
 - Built for the TV remote
 
-Keywords: Globale.tv, IPTV player, M3U player, Xtream player, Android TV, Google TV, Fire TV, webOS, free media player.
+## Roadmap / Yol haritası
+- 🔜 **LG webOS** support is planned next / LG webOS desteği sırada, yakında geliyor.
+
+Keywords: Globale.tv, IPTV player, M3U player, Xtream player, Android TV, Google TV, Fire TV, Fire TV Stick, webOS, free media player.
