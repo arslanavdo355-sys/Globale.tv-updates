@@ -26,9 +26,22 @@
 | | |
 |---|---|
 | **Most devices / Çoğu cihaz** | **[Globale.tv.apk](https://github.com/arslanavdo355-sys/Globale.tv-updates/releases/latest/download/Globale.tv.apk)** |
+| **🔥 Amazon Fire TV / Fire TV Stick** | **[Globale.tv.apk](https://github.com/arslanavdo355-sys/Globale.tv-updates/releases/latest/download/Globale.tv.apk)** (same file, install via **Downloader** app / aynı dosya, **Downloader** uygulamasıyla kur) |
 | Intel/x86 Android boxes | [Globale.tv-x86_64.apk](https://github.com/arslanavdo355-sys/Globale.tv-updates/releases/latest/download/Globale.tv-x86_64.apk) |
 | Simple one-tap page / Sade indirme sayfası | [arslanavdo355-sys.github.io/Globale.tv-updates](https://arslanavdo355-sys.github.io/Globale.tv-updates/) |
 | All versions / Tüm sürümler | [Releases](https://github.com/arslanavdo355-sys/Globale.tv-updates/releases) |
+
+## 🔥 Fire TV Stick kurulumu / Install on Fire TV Stick
+
+1. Fire TV Stick'te **Ayarlar → My Fire TV → Developer Options** aç, **"Apps from Unknown Sources"**'ı **aç**.
+2. Uygulama mağazasından (Appstore) **"Downloader"** uygulamasını kur ve aç.
+3. Downloader'da çıkan kutuya şu adresi yaz: `github.com/arslanavdo355-sys/Globale.tv-updates/releases/latest/download/Globale.tv.apk`
+4. "Go" de, indirme bitince **"Install"**, sonra **"Open"** de.
+
+1. On Fire TV Stick, open **Settings → My Fire TV → Developer Options**, turn **"Apps from Unknown Sources"** **on**.
+2. Install and open **"Downloader"** from the Appstore.
+3. In Downloader, type this address: `github.com/arslanavdo355-sys/Globale.tv-updates/releases/latest/download/Globale.tv.apk`
+4. Tap "Go", then **Install**, then **Open** once it downloads.
 
 ## Devices / Cihazlar
 
