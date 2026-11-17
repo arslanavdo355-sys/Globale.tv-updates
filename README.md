@@ -47,8 +47,8 @@
 
 | Device / Cihaz | How / Nasıl |
 |---|---|
-| Android TV, Google TV | Install **Downloader**, enter code **XXXXXXX** or use the link above / **Downloader**'ı kur, **XXXXXXX** kodunu ya da yukarıdaki linki kullan |
-| Amazon Fire TV / Fire TV Stick | Install **Downloader** from the Appstore, enter code **XXXXXXX** or use the link above / Appstore'dan **Downloader**'ı kur, **XXXXXXX** kodunu ya da yukarıdaki linki kullan |
+| Android TV, Google TV | Install **Downloader**, enter code **5881297** or use the link above / **Downloader**'ı kur, **5881297** kodunu ya da yukarıdaki linki kullan |
+| Amazon Fire TV / Fire TV Stick | Install **Downloader** from the Appstore, enter code **5881297** or use the link above / Appstore'dan **Downloader**'ı kur, **5881297** kodunu ya da yukarıdaki linki kullan |
 | Android phone / box (ARM) | Open the main download link above / Yukarıdaki ana linki aç |
 | Android box (Intel/x86) | Open the x86 link above / Yukarıdaki x86 linkini aç |
 | LG webOS | In development / Geliştiriliyor |
