@@ -16,19 +16,55 @@ const LS_DEVICE_ID = "globale_webos_device_id";
 const LS_SECRET    = "globale_webos_secret";
 const LS_GROUPS_HIDDEN = "globale_webos_hidden_groups";
 
-// ---------------- Cihaz kimliği ----------------
+// ---------------- Cihaz kimliği (TV donanımına bağlı, kalıcı) ----------------
+// webOS, uygulama silinip tekrar kurulsa BİLE aynı kalan bir sistem kimliği sağlar:
+// LGUDID (LG Unique Device ID), Luna Service Bus üzerinden "luna://com.webos.service.sm"
+// servisinin "deviceid/getIDs" metoduyla okunur. Bu, uygulamanın kendi deposuna değil,
+// TV'nin sistemine kayıtlıdır — uygulama kaldırılıp tekrar kurulduğunda da değişmez.
+// NOT: Bu, gerçek bir LG TV veya webOS Simulator'da henüz test edilmedi (elimde fiziksel
+// cihaz yok) — bu yüzden "test edildi" olarak raporlanmıyor; sadece resmi webOS API'sine
+// göre hazırlandı. webOS çalışma zamanı yoksa (bu tarayıcı-test ortamı gibi) tarayıcıya
+// özel kalıcı bir ID'ye düşülür — bu bir SAHTE MAC değildir, yalnızca test ortamı içindir.
 function uuidLike(){
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c=>{
     const r = Math.random()*16|0, v = c==='x'?r:(r&0x3|0x8);
     return v.toString(16);
   });
 }
-function getDeviceId(){
-  let id = localStorage.getItem(LS_DEVICE_ID);
+let _cachedDeviceId = null;
+function getLunaDeviceId(){
+  return new Promise(resolve=>{
+    if(!window.webOS || !window.webOS.service || typeof window.webOS.service.request !== 'function'){
+      resolve(null); return;
+    }
+    try{
+      window.webOS.service.request('luna://com.webos.service.sm', {
+        method: 'deviceid/getIDs',
+        parameters: { idType: ['LGUDID'] },
+        onSuccess: (res)=>{
+          const id = res && res.idList && res.idList[0] && res.idList[0].idValue;
+          resolve(id || null);
+        },
+        onFailure: ()=> resolve(null),
+      });
+    }catch(e){ resolve(null); }
+  });
+}
+async function getDeviceId(){
+  if(_cachedDeviceId) return _cachedDeviceId;
+  const lunaId = await getLunaDeviceId();
+  if(lunaId){
+    _cachedDeviceId = 'TV-' + lunaId;
+    try{ localStorage.setItem(LS_DEVICE_ID, _cachedDeviceId); }catch(e){}
+    return _cachedDeviceId;
+  }
+  let id = null;
+  try{ id = localStorage.getItem(LS_DEVICE_ID); }catch(e){}
   if(!id){
     id = 'WEBOS-' + uuidLike().toUpperCase().replace(/-/g,'').slice(0,12);
-    localStorage.setItem(LS_DEVICE_ID, id);
+    try{ localStorage.setItem(LS_DEVICE_ID, id); }catch(e){}
   }
+  _cachedDeviceId = id;
   return id;
 }
 function getSecret(){
@@ -45,7 +81,7 @@ const Panel = {
   corsBlocked: false,
   async _call(path, method, body){
     const headers = {
-      'x-device-mac': getDeviceId(),
+      'x-device-mac': await getDeviceId(),
       'x-device-secret': getSecret(),
     };
     let opts = { method, headers };
@@ -64,7 +100,7 @@ const Panel = {
     }
   },
   async hello(rotate){
-    const body = { mac: getDeviceId(), secret: getSecret() };
+    const body = { mac: await getDeviceId(), secret: getSecret() };
     if(rotate) body.rotate = true;
     const r = await this._call('/api/tv/hello', 'POST', body);
     return r.ok ? r.json : null;
@@ -83,7 +119,26 @@ const Screens = {
     const el = document.getElementById('screen-' + id);
     if(el) el.classList.add('active');
     this.current = id;
+    document.getElementById('tvClock')?.classList.toggle('show', id === 'home');
     Focus.onScreenChange(id);
+  }
+};
+
+// ---------------- Saat / tarih (yalnızca ana ekranda, orijinal uygulamadaki gibi) ----------------
+const Clock = {
+  timer: null,
+  start(){
+    this.tick();
+    clearInterval(this.timer);
+    this.timer = setInterval(()=> this.tick(), 15000);
+  },
+  tick(){
+    const now = new Date();
+    const locale = { de:'de-DE', en:'en-US', tr:'tr-TR' }[getLang()] || 'de-DE';
+    const te = document.getElementById('tcTime');
+    const de = document.getElementById('tcDate');
+    if(te) te.textContent = now.toLocaleTimeString(locale, { hour:'2-digit', minute:'2-digit' });
+    if(de) de.textContent = now.toLocaleDateString(locale, { weekday:'short', day:'2-digit', month:'short' });
   }
 };
 
@@ -129,7 +184,7 @@ const Connect = {
   timer: null,
   async start(){
     Screens.show('connect');
-    document.getElementById('connectDeviceId').textContent = getDeviceId();
+    document.getElementById('connectDeviceId').textContent = await getDeviceId();
     document.getElementById('connectPanelAddr').textContent = PANEL_DISPLAY;
     await this.refresh(false);
   },
@@ -196,9 +251,25 @@ const ChannelUI = {
   render(){
     this.buildGroups();
     const keys = Object.keys(this.groups);
-    if(!keys.length){ Screens.show('empty'); return; }
     const sidebar = document.getElementById('sidebarGroups');
+    const list = document.getElementById('channelList');
     sidebar.innerHTML = '';
+    if(!keys.length){
+      // Orijinal uygulamadaki gibi: Favoriten / Alle Sender sabit girişleri, 0 kanal.
+      const favRow = document.createElement('div');
+      favRow.className = 'group-item';
+      favRow.innerHTML = `<span>♡ ${t('fav_label')}</span><span class="count">0</span>`;
+      const allRow = document.createElement('div');
+      allRow.className = 'group-item focused';
+      allRow.innerHTML = `<span>▭ ${t('all_channels_label')}</span><span class="count">0</span>`;
+      sidebar.appendChild(favRow); sidebar.appendChild(allRow);
+      list.innerHTML = `<div class="list-empty">${t('list_empty_hint')}</div>`;
+      document.getElementById('previewBox').innerHTML = '';
+      document.getElementById('previewTitle').textContent = '—';
+      document.getElementById('previewSub').textContent = t('preview_select');
+      Screens.show('home');
+      return;
+    }
     keys.forEach((k,i)=>{
       const g = this.groups[k];
       const div = document.createElement('div');
@@ -327,12 +398,19 @@ const SettingsUI = {
     data.rows.forEach(row=>{
       const div = document.createElement('div');
       div.className = 'setting-row focusable';
-      let desc = row.dynamic === 'deviceId' ? getDeviceId() : t(row.descKey, row.descParams);
-      div.innerHTML = `<div><div class="label">${t(row.labelKey)}</div><div class="desc">${desc}</div></div>` +
+      const isDyn = row.dynamic === 'deviceId';
+      const desc = isDyn ? '…' : t(row.descKey, row.descParams);
+      div.innerHTML = `<div><div class="label">${t(row.labelKey)}</div><div class="desc"${isDyn ? ' data-dyn="deviceId"' : ''}>${desc}</div></div>` +
         (row.soon ? `<span class="badge-soon">${t('soon')}</span>` : '');
       if(row.action === 'connect') div.onclick = ()=> Connect.start();
       body.appendChild(div);
     });
+    if(data.rows.some(r=>r.dynamic==='deviceId')){
+      getDeviceId().then(id=>{
+        const el = body.querySelector('[data-dyn="deviceId"]');
+        if(el) el.textContent = id;
+      });
+    }
     Focus.refresh('settings');
   },
   renderLangPicker(body){
@@ -347,6 +425,7 @@ const SettingsUI = {
       div.onclick = ()=>{
         setLang(code);
         applyStaticI18n();
+        Clock.tick();
         this.open('lang');
       };
       body.appendChild(div);
@@ -408,6 +487,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     el.addEventListener('click', ()=> SettingsUI.open(el.dataset.sec));
   });
   document.getElementById('btnOpenSettings').addEventListener('click', ()=> SettingsUI.open('general'));
+  document.getElementById('btnNavSettings').addEventListener('click', ()=> SettingsUI.open('general'));
   document.getElementById('btnSettingsBack').addEventListener('click', ()=>{
     App.sources ? ChannelUI.render() : Connect.start();
   });
@@ -418,7 +498,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   document.getElementById('btnSkipDemo').addEventListener('click', ()=>{
     clearInterval(Connect.timer);
     App.sources = [];
-    Screens.show('empty');
+    ChannelUI.render();
   });
   Input.init();
 });
@@ -427,6 +507,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
 const App = { sources: null };
 (async function boot(){
   applyStaticI18n();
+  Clock.start();
   document.getElementById('emptyBody').textContent = t('empty_body', { panel: PANEL_DISPLAY });
   Screens.show('loading');
   await new Promise(r=>setTimeout(r, 400)); // kısa marka animasyonu

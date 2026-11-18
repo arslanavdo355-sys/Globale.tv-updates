@@ -52,6 +52,18 @@
 
     <!-- Ana ekran -->
     <div class="screen" id="screen-home">
+      <div class="app-nav">
+        <div class="nav-logo">▶</div>
+        <button class="nav-ic" title="Suche">🔍</button>
+        <button class="nav-ic active" title="Live TV">📺</button>
+        <button class="nav-ic" title="Filmler">▦</button>
+        <button class="nav-ic" title="Diziler">▭</button>
+        <button class="nav-ic" title="Favoriten">♡</button>
+        <button class="nav-ic" title="İndirilenler">⬇</button>
+        <button class="nav-ic" title="Öne çıkanlar">★</button>
+        <div class="grow"></div>
+        <button class="nav-ic focusable" id="btnNavSettings" title="Ayarlar">⚙</button>
+      </div>
       <div class="sidebar" id="sidebarGroups"></div>
       <div class="channel-list" id="channelList"></div>
       <div class="preview col" id="previewPane">
@@ -108,6 +120,11 @@
         </div>
         <div id="settingsContent"></div>
       </div>
+    </div>
+
+    <div class="tv-clock" id="tvClock">
+      <div class="tc-time" id="tcTime">--:--</div>
+      <div class="tc-date" id="tcDate">—</div>
     </div>
 
   </div>

@@ -72,6 +72,9 @@ const I18N = {
     s_about_version_l: "Version",
     s_about_version_d: "Globale.tv webOS — Testversion",
     s_about_device_l: "Geräte-ID",
+    fav_label: "Favoriten",
+    all_channels_label: "Alle Sender",
+    list_empty_hint: "Hier sind keine Sender.",
   },
   en: {
     app_name: "Globale.tv",
@@ -139,6 +142,9 @@ const I18N = {
     s_about_version_l: "Version",
     s_about_version_d: "Globale.tv webOS — test version",
     s_about_device_l: "Device ID",
+    fav_label: "Favorites",
+    all_channels_label: "All Channels",
+    list_empty_hint: "There are no channels here.",
   },
   tr: {
     app_name: "Globale.tv",
@@ -206,6 +212,9 @@ const I18N = {
     s_about_version_l: "Sürüm",
     s_about_version_d: "Globale.tv webOS — test sürümü",
     s_about_device_l: "Cihaz Kimliği",
+    fav_label: "Favoriler",
+    all_channels_label: "Tüm Kanallar",
+    list_empty_hint: "Burada kanal yok.",
   },
 };
 

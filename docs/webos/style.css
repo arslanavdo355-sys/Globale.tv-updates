@@ -79,6 +79,29 @@ button, .focusable{
 
 /* ---------- Ana ekran / kanal listesi ---------- */
 #screen-home{flex-direction:row;}
+
+/* Sol ikon rayı — orijinal Android uygulamasının kalıcı menü çubuğuyla aynı düzen.
+   Henüz desteklenmeyen bölümler (arama, filmler, diziler, favoriler, indirilenler,
+   öne çıkanlar) soluk gösterilir ve TIKLANAMAZ — aktifmiş gibi gösterilmez. */
+.app-nav{width:64px; min-width:64px; background:var(--glass-off); border-right:1px solid var(--border);
+  display:flex; flex-direction:column; align-items:center; gap:.9vh; padding:1.8vh 0;}
+.app-nav .nav-logo{width:3.8vh; height:3.8vh; border-radius:10px; background:var(--ok); color:#05140C;
+  display:flex; align-items:center; justify-content:center; font-size:1.8vh; font-weight:800; margin-bottom:1vh;}
+.app-nav .nav-ic{width:4.2vh; height:4.2vh; border-radius:10px; display:flex; align-items:center; justify-content:center;
+  font-size:2vh; background:transparent; border:1px solid transparent; color:var(--nav); opacity:.4; cursor:default;}
+.app-nav .nav-ic.active{opacity:1; background:var(--glass); border-color:var(--border); color:var(--accent);}
+.app-nav .nav-ic#btnNavSettings{opacity:1; cursor:pointer;}
+.app-nav .nav-ic#btnNavSettings:hover,.app-nav .nav-ic#btnNavSettings.focused{background:var(--glass); border-color:var(--border);}
+
+/* Kanal/kaynak listesi boşken (panel bağlı değil veya kaynak eklenmemiş) */
+.list-empty{margin:auto; color:var(--muted); font-size:1.8vh;}
+
+/* Sağ alt saat/tarih — orijinal uygulamadaki gibi, yalnızca ana ekranda görünür */
+.tv-clock{position:absolute; right:2vw; bottom:2vh; text-align:right; pointer-events:none;
+  opacity:0; transition:opacity .2s; z-index:6;}
+.tv-clock.show{opacity:1;}
+.tv-clock .tc-time{font-size:2.6vh; font-weight:800; color:var(--text); font-variant-numeric:tabular-nums;}
+.tv-clock .tc-date{font-size:1.4vh; color:var(--muted); margin-top:.2vh;}
 .sidebar{width:26%; min-width:220px; background:var(--glass-off); border-right:1px solid var(--border);
   display:flex; flex-direction:column; padding:2vh 1.2vw; gap:.6vh; overflow-y:auto;}
 .sidebar .group-item{padding:1.2vh 1vw; border-radius:8px; color:var(--nav); font-size:1.9vh;
