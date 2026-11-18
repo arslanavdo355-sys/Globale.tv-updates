@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Kontrol Merkezi · Globale.tv</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b1638; --bg2:#101c44; --card:#152454; --card-border:#24346e;
+    --fg:#eef1fb; --fg-dim:#9aa6d6; --accent:#4f8cff; --accent2:#7ad1ff;
+    --good:#3ddc97; --warn:#ffb648;
+    color-scheme: dark;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:radial-gradient(1200px 600px at 50% -10%, #16244f 0%, var(--bg) 55%, #070d24 100%);
+    color:var(--fg);
+    font-family:'Inter',system-ui,sans-serif;
+    min-height:100vh;
+    padding: max(20px, env(safe-area-inset-top,0px)) max(16px, env(safe-area-inset-right,0px)) 40px max(16px, env(safe-area-inset-left,0px));
+  }
+  h1,h2,h3{font-family:'Space Grotesk',system-ui,sans-serif; margin:0}
+  .wrap{max-width:720px;margin:0 auto}
+
+  /* ---- PIN gate ---- */
+  #gate{
+    min-height:90vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:22px; text-align:center;
+  }
+  .logo-dot{
+    width:56px;height:56px;border-radius:16px;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:700;
+    box-shadow:0 10px 30px -8px rgba(79,140,255,.6);
+  }
+  #gate h1{font-size:22px}
+  #gate p{color:var(--fg-dim); font-size:14px; margin:0}
+  #pinDots{display:flex; gap:14px; margin:8px 0}
+  .dot{width:14px;height:14px;border-radius:50%;border:2px solid var(--card-border); transition:all .15s}
+  .dot.filled{background:var(--accent); border-color:var(--accent)}
+  #pad{display:grid; grid-template-columns:repeat(3,64px); gap:14px; margin-top:6px}
+  #pad button{
+    width:64px;height:64px;border-radius:50%;border:1px solid var(--card-border);
+    background:var(--card); color:var(--fg); font-size:20px; font-weight:600;
+    -webkit-tap-highlight-color:transparent;
+  }
+  #pad button:active{background:var(--accent); border-color:var(--accent)}
+  #pad button.wide{grid-column:span 1; font-size:14px; color:var(--fg-dim); background:transparent; border:none}
+  #gateError{color:#ff6b7a; font-size:13px; height:16px}
+
+  /* ---- Dashboard ---- */
+  #dash{display:none}
+  header.top{display:flex; align-items:center; gap:12px; margin-bottom:22px}
+  header.top h1{font-size:19px}
+  header.top .sub{color:var(--fg-dim); font-size:12.5px}
+  .grid{display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-bottom:22px}
+  .stat{
+    background:var(--card); border:1px solid var(--card-border); border-radius:16px; padding:16px;
+  }
+  .stat .label{color:var(--fg-dim); font-size:12px; text-transform:uppercase; letter-spacing:.06em}
+  .stat .value{font-family:'Space Grotesk'; font-size:26px; font-weight:700; margin-top:4px}
+  .stat .value.small{font-size:16px}
+  section{margin-bottom:26px}
+  section h2{font-size:15px; color:var(--fg-dim); text-transform:uppercase; letter-spacing:.06em; font-weight:600; margin-bottom:10px}
+  .bars{display:flex; flex-direction:column; gap:8px}
+  .bar-row{display:grid; grid-template-columns:72px 1fr 44px; align-items:center; gap:10px; font-size:13px}
+  .bar-row .ver{color:var(--fg-dim); font-variant-numeric:tabular-nums}
+  .bar-track{height:10px; background:var(--bg2); border-radius:6px; overflow:hidden}
+  .bar-fill{height:100%; background:linear-gradient(90deg,var(--accent),var(--accent2)); border-radius:6px}
+  .bar-row .cnt{text-align:right; font-variant-numeric:tabular-nums; color:var(--fg)}
+  .links{display:flex; flex-direction:column; gap:10px}
+  .link-card{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    background:var(--card); border:1px solid var(--card-border); border-radius:14px; padding:14px 16px;
+    text-decoration:none; color:var(--fg);
+  }
+  .link-card .t{font-weight:600; font-size:14.5px}
+  .link-card .u{color:var(--fg-dim); font-size:12px; word-break:break-all}
+  .link-card .go{color:var(--accent2); font-size:18px}
+  #status{color:var(--fg-dim); font-size:12px; text-align:center; margin-top:18px}
+  #refreshBtn{
+    display:block; margin:14px auto 0; background:none; border:1px solid var(--card-border);
+    color:var(--fg-dim); border-radius:10px; padding:8px 16px; font-size:12.5px;
+  }
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <div class="logo-dot">G</div>
+  <h1>Kontrol Merkezi</h1>
+  <p>PIN'i gir</p>
+  <div id="pinDots"></div>
+  <div id="gateError"></div>
+  <div id="pad"></div>
+</div>
+
+<div id="dash">
+  <div class="wrap">
+    <header class="top">
+      <div class="logo-dot" style="width:40px;height:40px;border-radius:12px;font-size:18px">G</div>
+      <div>
+        <h1>Kontrol Merkezi</h1>
+        <div class="sub">Globale.tv · yalnızca sana özel</div>
+      </div>
+    </header>
+
+    <div class="grid" id="statGrid">
+      <div class="stat"><div class="label">Toplam İndirme</div><div class="value" id="statTotal">—</div></div>
+      <div class="stat"><div class="label">Yayınlanan Sürüm</div><div class="value small" id="statLatest">—</div></div>
+      <div class="stat"><div class="label">Sürüm Sayısı</div><div class="value" id="statCount">—</div></div>
+      <div class="stat"><div class="label">Test Kanalı Sürümü</div><div class="value small" id="statTest">—</div></div>
+    </div>
+
+    <section>
+      <h2>Sürüme Göre İndirmeler</h2>
+      <div class="bars" id="bars"><div class="sub" style="color:var(--fg-dim)">Yükleniyor…</div></div>
+    </section>
+
+    <section>
+      <h2>Hızlı Linkler</h2>
+      <div class="links">
+        <a class="link-card" href="https://globale-hesabim-tv.netlify.app" target="_blank" rel="noopener">
+          <div><div class="t">Müşteri Paneli</div><div class="u">globale-hesabim-tv.netlify.app</div></div><div class="go">↗</div>
+        </a>
+        <a class="link-card" href="https://arslanavdo355-sys.github.io/Globale.tv-updates/apk/Globale.tv.apk" target="_blank" rel="noopener">
+          <div><div class="t">İndirme Linki (APK)</div><div class="u">GitHub Pages · Globale.tv.apk</div></div><div class="go">↗</div>
+        </a>
+        <a class="link-card" href="https://github.com/arslanavdo355-sys/Globale.tv-updates/releases" target="_blank" rel="noopener">
+          <div><div class="t">Güncelleme / Üretim Kanalı</div><div class="u">github.com · Globale.tv-updates releases</div></div><div class="go">↗</div>
+        </a>
+        <a class="link-card" href="https://github.com/arslanavdo355-sys/globale.tv/releases" target="_blank" rel="noopener">
+          <div><div class="t">Test Kanalı</div><div class="u">github.com · globale.tv releases</div></div><div class="go">↗</div>
+        </a>
+        <a class="link-card" href="https://github.com/arslanavdo355-sys/globale.tv/actions" target="_blank" rel="noopener">
+          <div><div class="t">Build / CI</div><div class="u">github.com · Actions</div></div><div class="go">↗</div>
+        </a>
+        <a class="link-card" href="https://app.netlify.com/projects/globale-hesabim-tv" target="_blank" rel="noopener">
+          <div><div class="t">Netlify (Panel Hosting)</div><div class="u">app.netlify.com</div></div><div class="go">↗</div>
+        </a>
+      </div>
+    </section>
+
+    <button id="refreshBtn">↻ Verileri Yenile</button>
+    <div id="status"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var PIN_HASH = "c403916c0d33a0f340b7061f46598ac308e26dd3bdf0d3ef6abb6a86c11c068d";
+  var SESSION_KEY = "gkm_unlocked_v1";
+  var entered = "";
+  var dotsEl = document.getElementById('pinDots');
+  var padEl = document.getElementById('pad');
+  var errEl = document.getElementById('gateError');
+
+  function renderDots(){
+    dotsEl.innerHTML = "";
+    for(var i=0;i<6;i++){
+      var d = document.createElement('div');
+      d.className = 'dot' + (i < entered.length ? ' filled' : '');
+      dotsEl.appendChild(d);
+    }
+  }
+
+  function sha256hex(str){
+    var enc = new TextEncoder().encode(str);
+    return crypto.subtle.digest('SHA-256', enc).then(function(buf){
+      return Array.prototype.map.call(new Uint8Array(buf), function(b){
+        return b.toString(16).padStart(2,'0');
+      }).join('');
+    });
+  }
+
+  function checkPin(){
+    sha256hex(entered).then(function(hash){
+      if(hash === PIN_HASH){
+        try{ sessionStorage.setItem(SESSION_KEY, "1"); }catch(e){}
+        unlock();
+      } else {
+        errEl.textContent = "Yanlış PIN";
+        entered = "";
+        renderDots();
+        setTimeout(function(){ errEl.textContent = ""; }, 1200);
+      }
+    });
+  }
+
+  function buildPad(){
+    var keys = ["1","2","3","4","5","6","7","8","9","","0","⌫"];
+    padEl.innerHTML = "";
+    keys.forEach(function(k){
+      var b = document.createElement('button');
+      if(k === ""){ b.style.visibility = 'hidden'; }
+      else {
+        b.textContent = k;
+        if(k === "⌫"){ b.className = 'wide'; }
+        b.addEventListener('click', function(){
+          if(k === "⌫"){ entered = entered.slice(0,-1); renderDots(); return; }
+          if(entered.length >= 6) return;
+          entered += k;
+          renderDots();
+          if(entered.length === 6) checkPin();
+        });
+      }
+      padEl.appendChild(b);
+    });
+  }
+
+  function unlock(){
+    document.getElementById('gate').style.display = 'none';
+    document.getElementById('dash').style.display = 'block';
+    loadStats();
+  }
+
+  buildPad();
+  renderDots();
+
+  var already = false;
+  try{ already = sessionStorage.getItem(SESSION_KEY) === "1"; }catch(e){}
+  if(already){ unlock(); }
+
+  // ---- Dashboard data (GitHub public API, anonymous aggregate release stats) ----
+  var GH = "https://api.github.com/repos/arslanavdo355-sys/";
+
+  function fmt(n){ return n.toLocaleString('tr-TR'); }
+
+  function loadStats(){
+    document.getElementById('status').textContent = "Yükleniyor…";
+    Promise.all([
+      fetch(GH + "Globale.tv-updates/releases?per_page=100").then(function(r){ return r.ok ? r.json() : []; }).catch(function(){ return []; }),
+      fetch(GH + "globale.tv/releases?per_page=5").then(function(r){ return r.ok ? r.json() : []; }).catch(function(){ return []; })
+    ]).then(function(res){
+      var prodReleases = res[0] || [];
+      var testReleases = res[1] || [];
+
+      var perVersion = [];
+      var total = 0;
+      prodReleases.forEach(function(rel){
+        var dl = (rel.assets||[]).reduce(function(s,a){ return s + (a.download_count||0); }, 0);
+        total += dl;
+        perVersion.push({ tag: rel.tag_name, dl: dl, date: rel.published_at });
+      });
+      perVersion.sort(function(a,b){ return b.dl - a.dl; });
+
+      document.getElementById('statTotal').textContent = fmt(total);
+      document.getElementById('statCount').textContent = fmt(prodReleases.length);
+      document.getElementById('statLatest').textContent = prodReleases[0] ? prodReleases[0].tag_name : "—";
+      document.getElementById('statTest').textContent = testReleases[0] ? testReleases[0].tag_name.replace(/^v/,'') : "—";
+
+      var barsEl = document.getElementById('bars');
+      if(perVersion.length === 0){
+        barsEl.innerHTML = '<div style="color:var(--fg-dim)">Henüz yayınlanmış sürüm yok.</div>';
+      } else {
+        var max = Math.max.apply(null, perVersion.map(function(v){ return v.dl; })) || 1;
+        barsEl.innerHTML = perVersion.slice(0,10).map(function(v){
+          var pct = Math.round((v.dl / max) * 100);
+          return '<div class="bar-row">' +
+            '<div class="ver">' + v.tag + '</div>' +
+            '<div class="bar-track"><div class="bar-fill" style="width:' + pct + '%"></div></div>' +
+            '<div class="cnt">' + fmt(v.dl) + '</div>' +
+          '</div>';
+        }).join('');
+      }
+
+      document.getElementById('status').textContent = "Son güncelleme: " + new Date().toLocaleString('tr-TR');
+    }).catch(function(){
+      document.getElementById('status').textContent = "Veriler şu an alınamadı (GitHub limiti olabilir). Birazdan tekrar dene.";
+    });
+  }
+
+  document.getElementById('refreshBtn').addEventListener('click', loadStats);
+})();
+</script>
+</body>
+</html>
