@@ -1,6 +1,5 @@
 User-agent: *
 Allow: /
 Disallow: /kontrol/
-Disallow: /webos/
 
 Sitemap: https://arslanavdo355-sys.github.io/Globale.tv-updates/sitemap.xml
