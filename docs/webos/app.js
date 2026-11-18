@@ -153,7 +153,9 @@ const Focus = {
     if(!screenEl) return;
     const items = Array.from(screenEl.querySelectorAll('.focusable, .group-item, .channel-item, .s-item'))
       .filter(el => el.offsetParent !== null);
-    this.stack[id] = { items, index: 0 };
+    // Ana ekranda orijinal uygulamadaki gibi ilk tuşa basılana kadar odak çerçevesi gösterilmez
+    this.stack[id] = { items, index: id === 'home' ? -1 : 0 };
+    if(id === 'home') items.forEach(el=>el.classList.remove('focused'));
     this.apply(id);
   },
   apply(id){
@@ -256,14 +258,17 @@ const ChannelUI = {
     sidebar.innerHTML = '';
     if(!keys.length){
       // Orijinal uygulamadaki gibi: Favoriten / Alle Sender sabit girişleri, 0 kanal.
+      const ICON_HEART = '<svg viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-8.6-9.6C2.7 7.2 4.8 4.5 7.8 4.5c1.8 0 3.2 1 4.2 2.4 1-1.4 2.4-2.4 4.2-2.4 3 0 5.1 2.7 4.4 5.9C19.5 15.4 12 20 12 20z"/></svg>';
+      const ICON_TV = '<svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M8.5 3.5L12 7l3.5-3.5"/></svg>';
       const favRow = document.createElement('div');
       favRow.className = 'group-item';
-      favRow.innerHTML = `<span>♡ ${t('fav_label')}</span><span class="count">0</span>`;
+      favRow.innerHTML = `<span class="gi">${ICON_HEART}${t('fav_label')}</span><span class="count">0</span>`;
       const allRow = document.createElement('div');
-      allRow.className = 'group-item focused';
-      allRow.innerHTML = `<span>▭ ${t('all_channels_label')}</span><span class="count">0</span>`;
+      allRow.className = 'group-item active';
+      allRow.innerHTML = `<span class="gi">${ICON_TV}${t('all_channels_label')}</span><span class="count">0</span>`;
       sidebar.appendChild(favRow); sidebar.appendChild(allRow);
       list.innerHTML = `<div class="list-empty">${t('list_empty_hint')}</div>`;
+      document.getElementById('previewPane').classList.add('is-empty');
       document.getElementById('previewBox').innerHTML = '';
       document.getElementById('previewTitle').textContent = '—';
       document.getElementById('previewSub').textContent = t('preview_select');
@@ -298,6 +303,7 @@ const ChannelUI = {
     Focus.refresh('home');
   },
   preview(ch){
+    document.getElementById('previewPane').classList.remove('is-empty');
     document.getElementById('previewTitle').textContent = ch.name || '—';
     document.getElementById('previewSub').textContent = ch.kind === 'xtream' ? t('group_xtream') : (ch.kind === 'm3u' ? t('group_m3u') : (ch.url||''));
   }
@@ -505,13 +511,25 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
 // ---------------- Uygulama girişi ----------------
 const App = { sources: null };
+// 1 tasarım pikseli (orijinal 1920×1080 çizim) = TV ekranı genişliği / 1920
+function applyDesignScale(){
+  const s = document.getElementById('tv-screen');
+  if(s) s.style.setProperty('--u', (s.getBoundingClientRect().width / 1920) + 'px');
+}
+window.addEventListener('resize', applyDesignScale);
+document.addEventListener('fullscreenchange', applyDesignScale);
+
 (async function boot(){
+  applyDesignScale();
   applyStaticI18n();
   Clock.start();
   document.getElementById('emptyBody').textContent = t('empty_body', { panel: PANEL_DISPLAY });
   Screens.show('loading');
-  await new Promise(r=>setTimeout(r, 400)); // kısa marka animasyonu
-  const sources = await Panel.sources();
+  // Orijinal açılış animasyonu (~3,4 sn) tamamlanana kadar bekle; panel isteği paralel çalışır
+  const splashDone = new Promise(r=>setTimeout(r, 3600));
+  const sourcesP = Panel.sources();
+  await splashDone;
+  const sources = await sourcesP;
   if(sources && sources.length){
     App.sources = sources;
     ChannelUI.render();

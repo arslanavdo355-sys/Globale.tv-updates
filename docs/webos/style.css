@@ -198,3 +198,87 @@ button, .focusable{
 
 ::-webkit-scrollbar{width:8px; height:8px;}
 ::-webkit-scrollbar-thumb{background:var(--border); border-radius:4px;}
+
+/* =====================================================================
+   ORİJİNAL "STAGE" TASARIMI — Android kaynağından birebir değerler
+   (StageRail.kt, StageTokens.kt, GlobaleLook.kt tema 0, vurgu TEAL).
+   Tasarım 1920×1080 çizildi; --u = 1 tasarım pikseli (JS ekran genişliğine göre ayarlar).
+   ===================================================================== */
+#tv-screen{
+  --u: 1px;
+  --accent:#56D9C9; --on-accent:#04201C;
+  /* GlobaleLook.palette(0): üst #0F172A, orta #1E1B4B, alt #09090B + iki köşe ışığı */
+  background:
+    radial-gradient(60% 55% at 0% 0%, rgba(56,189,248,.16), transparent 70%),
+    radial-gradient(55% 50% at 100% 100%, rgba(96,120,255,.10), transparent 70%),
+    linear-gradient(180deg, #0F172A 0%, #1E1B4B 50%, #09090B 100%);
+}
+#tv-screen .screen{ background:transparent; }
+#screen-player{ background:#000 !important; }
+
+/* Açılış: orijinal animasyon (branding-reference/opening-animation-reference.html) */
+#screen-loading{ padding:0; }
+#splashFrame{ position:absolute; inset:0; width:100%; height:100%; border:0; background:#031029; }
+
+/* Sol ray: 84 px cam kapsül, kenardan 28 px, boy boyu (Full), 16 padding, 12 aralık */
+#screen-home{ padding-left:calc(var(--u)*128); }
+.app-nav{
+  position:absolute; left:calc(var(--u)*28); top:calc(var(--u)*24); bottom:calc(var(--u)*24);
+  width:calc(var(--u)*84); min-width:0; padding:calc(var(--u)*16) 0;
+  gap:calc(var(--u)*12); border-radius:calc(var(--u)*42);
+  background:rgba(18,26,30,.42); border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 calc(var(--u)*24) calc(var(--u)*60) rgba(0,0,0,.45);
+  backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
+  z-index:4;
+}
+.app-nav .nav-logo{ width:calc(var(--u)*50); height:calc(var(--u)*50); border-radius:calc(var(--u)*12);
+  object-fit:cover; margin:0 0 calc(var(--u)*12) 0; background:none; }
+.app-nav .nav-sep{ width:calc(var(--u)*34); height:1px; background:rgba(255,255,255,.12); margin:calc(var(--u)*8) 0; }
+.app-nav .nav-ic{ position:relative; width:calc(var(--u)*58); height:calc(var(--u)*58); border-radius:calc(var(--u)*20);
+  opacity:1; color:#C4CFCA; background:transparent; border:0; padding:0; }
+.app-nav .nav-ic svg{ width:calc(var(--u)*27); height:calc(var(--u)*27); fill:none; stroke:currentColor;
+  stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.app-nav .nav-ic.active{ color:var(--accent); background:rgba(86,217,201,.14); border:0; }
+.app-nav .nav-ic.active::after{ content:""; position:absolute; right:calc(var(--u)*-9 - var(--u)*3); top:50%;
+  width:calc(var(--u)*6); height:calc(var(--u)*6); margin-top:calc(var(--u)*-3); border-radius:50%;
+  background:var(--accent); box-shadow:0 0 calc(var(--u)*10) var(--accent); }
+.app-nav .nav-ic#btnNavSettings{ opacity:1; }
+.app-nav .nav-ic#btnNavSettings.focused,.app-nav .nav-ic#btnNavSettings:hover{ background:var(--accent); color:var(--on-accent); box-shadow:none; }
+
+/* Kategori sütunu: "ALLE PLAYLISTS" başlığı + Favoriten / Alle Sender */
+#screen-home .sidebar{ width:calc(var(--u)*330); min-width:0; background:transparent; border:0;
+  padding:calc(var(--u)*0) calc(var(--u)*20) 0 calc(var(--u)*36); gap:0; }
+.sb-head{ font-size:calc(var(--u)*17); font-weight:700; letter-spacing:.08em; color:#6D7A75;
+  text-transform:uppercase; padding:calc(var(--u)*0) 0 calc(var(--u)*30); margin-top:calc(var(--u)*-6); }
+#sidebarGroups{ display:flex; flex-direction:column; gap:calc(var(--u)*10); }
+#screen-home .sidebar .group-item{ position:relative; align-items:center; padding:calc(var(--u)*10) calc(var(--u)*14) calc(var(--u)*10) calc(var(--u)*14);
+  font-size:calc(var(--u)*22); font-weight:700; color:#DBE4E0; border:0; border-radius:calc(var(--u)*12); background:transparent; }
+#screen-home .sidebar .group-item .gi{ display:flex; align-items:center; gap:calc(var(--u)*12); }
+#screen-home .sidebar .group-item svg{ width:calc(var(--u)*22); height:calc(var(--u)*22); fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+#screen-home .sidebar .group-item .count{ font-size:calc(var(--u)*17); color:#A7B3AE; font-weight:600; }
+#screen-home .sidebar .group-item.active{ color:var(--accent); }
+#screen-home .sidebar .group-item.active::before{ content:""; position:absolute; left:calc(var(--u)*-6); top:calc(var(--u)*8); bottom:calc(var(--u)*8);
+  width:calc(var(--u)*4); border-radius:calc(var(--u)*2); background:var(--accent); }
+#screen-home .sidebar .group-item.focused{ background:var(--accent); color:var(--on-accent); box-shadow:none; }
+#screen-home .sidebar .group-item.focused .count{ color:var(--on-accent); }
+
+/* Kanal listesi + boş durum */
+#screen-home .channel-list{ padding:calc(var(--u)*24) calc(var(--u)*20); }
+#screen-home .list-empty{ font-size:calc(var(--u)*22); font-weight:600; color:#A7B3AE; }
+#screen-home .channel-item{ font-size:calc(var(--u)*22); border-radius:calc(var(--u)*14); }
+#screen-home .channel-item.focused{ background:var(--accent); color:var(--on-accent); box-shadow:none; }
+
+/* Önizleme: sağ üstte siyah, yuvarlak köşeli video kutusu */
+#screen-home .preview{ width:calc(var(--u)*780); min-width:0; border:0; padding:calc(var(--u)*0) calc(var(--u)*60) 0 0; }
+#screen-home .preview .pv-box{ border:0; border-radius:calc(var(--u)*24); background:#000;
+  box-shadow:0 calc(var(--u)*24) calc(var(--u)*60) rgba(0,0,0,.45); margin-top:calc(var(--u)*-40); }
+#screen-home .preview .pv-box span{ display:none; }
+#screen-home .preview .pv-title{ font-size:calc(var(--u)*28); font-weight:800; }
+#screen-home .preview .pv-sub{ font-size:calc(var(--u)*18); }
+#screen-home .preview.is-empty .pv-title,#screen-home .preview.is-empty .pv-sub{ display:none; }
+#btnOpenSettings{ display:none !important; }
+
+/* Saat: sağ alt, 800 kalınlık */
+.tv-clock{ right:calc(var(--u)*72); bottom:calc(var(--u)*28); }
+.tv-clock .tc-time{ font-size:calc(var(--u)*48); line-height:1; letter-spacing:-.01em; }
+.tv-clock .tc-date{ font-size:calc(var(--u)*18); font-weight:700; color:#C9D3CF; margin-top:calc(var(--u)*6); }

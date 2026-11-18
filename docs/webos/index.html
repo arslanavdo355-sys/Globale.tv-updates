@@ -17,9 +17,7 @@
 
     <!-- Laden -->
     <div class="screen active" id="screen-loading">
-      <div class="logo-mark">Globale<span>.tv</span></div>
-      <div class="spinner"></div>
-      <div class="muted" style="font-size:1.6vh" data-i18n="loading"></div>
+      <iframe id="splashFrame" src="splash.html" title="Globale.tv" allow="autoplay"></iframe>
     </div>
 
     <!-- Panel-Verbindung -->
@@ -53,18 +51,19 @@
     <!-- Ana ekran -->
     <div class="screen" id="screen-home">
       <div class="app-nav">
-        <div class="nav-logo">▶</div>
-        <button class="nav-ic" title="Suche">🔍</button>
-        <button class="nav-ic active" title="Live TV">📺</button>
-        <button class="nav-ic" title="Filmler">▦</button>
-        <button class="nav-ic" title="Diziler">▭</button>
-        <button class="nav-ic" title="Favoriten">♡</button>
-        <button class="nav-ic" title="İndirilenler">⬇</button>
-        <button class="nav-ic" title="Öne çıkanlar">★</button>
+        <img class="nav-logo" src="logo.jpg" alt="Globale.tv">
+        <button class="nav-ic" title="Suche"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg></button>
+        <div class="nav-sep"></div>
+        <button class="nav-ic active" title="Live TV"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M8.5 3.5L12 7l3.5-3.5"/></svg></button>
+        <button class="nav-ic" title="Filme"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="2.5"/><path d="M8 3.5v17M16 3.5v17M3.5 8.5H8M3.5 15.5H8M16 8.5h4.5M16 15.5h4.5M8 12h8"/></svg></button>
+        <button class="nav-ic" title="Serien"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="10" rx="2.5"/><path d="M6.5 6.5h11M9 3.5h6"/></svg></button>
+        <button class="nav-ic" title="Favoriten"><svg viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-8.6-9.6C2.7 7.2 4.8 4.5 7.8 4.5c1.8 0 3.2 1 4.2 2.4 1-1.4 2.4-2.4 4.2-2.4 3 0 5.1 2.7 4.4 5.9C19.5 15.4 12 20 12 20z"/></svg></button>
+        <button class="nav-ic" title="Downloads"><svg viewBox="0 0 24 24"><path d="M12 4v11M7.5 10.5L12 15l4.5-4.5M5 19.5h14"/></svg></button>
+        <button class="nav-ic" title="Abo"><svg viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.8-5.2 2.8 1-5.8-4.3-4.1 5.9-.9z"/></svg></button>
         <div class="grow"></div>
-        <button class="nav-ic focusable" id="btnNavSettings" title="Ayarlar">⚙</button>
+        <button class="nav-ic focusable" id="btnNavSettings" title="Einstellungen"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="7"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg></button>
       </div>
-      <div class="sidebar" id="sidebarGroups"></div>
+      <div class="sidebar"><div class="sb-head" data-i18n="all_playlists"></div><div id="sidebarGroups"></div></div>
       <div class="channel-list" id="channelList"></div>
       <div class="preview col" id="previewPane">
         <div class="pv-box" id="previewBox"><span data-i18n="preview_empty"></span></div>
