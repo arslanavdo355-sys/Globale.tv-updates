@@ -42,6 +42,7 @@ function getSecret(){
 
 // ---------------- Panel API ----------------
 const Panel = {
+  corsBlocked: false,
   async _call(path, method, body){
     const headers = {
       'x-device-mac': getDeviceId(),
@@ -49,11 +50,18 @@ const Panel = {
     };
     let opts = { method, headers };
     if(body){ headers['content-type'] = 'application/json'; opts.body = JSON.stringify(body); }
-    const res = await fetch(PANEL_BASE + path, opts);
-    const text = await res.text().catch(()=> '');
-    let json = null;
-    try{ json = text ? JSON.parse(text) : null; }catch(e){}
-    return { ok: res.ok, status: res.status, json };
+    try{
+      const res = await fetch(PANEL_BASE + path, opts);
+      const text = await res.text().catch(()=> '');
+      let json = null;
+      try{ json = text ? JSON.parse(text) : null; }catch(e){}
+      return { ok: res.ok, status: res.status, json };
+    }catch(networkErr){
+      // Tarayıcı CORS'u reddettiğinde veya ağ erişilemez olduğunda fetch burada atar.
+      // Ekranı sonsuza dek "yükleniyor" durumunda bırakmamak için zarifçe başarısız olunur.
+      this.corsBlocked = true;
+      return { ok:false, status:0, json:null };
+    }
   },
   async hello(rotate){
     const body = { mac: getDeviceId(), secret: getSecret() };
@@ -129,7 +137,9 @@ const Connect = {
     document.getElementById('connectStatus').textContent = 'Bağlanıyor…';
     const session = await Panel.hello(rotate);
     if(!session){
-      document.getElementById('connectStatus').textContent = 'Panele ulaşılamadı — bağlantınızı kontrol edin.';
+      document.getElementById('connectStatus').textContent = Panel.corsBlocked
+        ? 'Panel sunucusu tarayıcı erişimine henüz izin vermiyor (CORS). Bu, test sürümüne özel bilinen bir sorun — Android uygulamasını etkilemiyor.'
+        : 'Panele ulaşılamadı — bağlantınızı kontrol edin.';
       return;
     }
     document.getElementById('connectPin').textContent = session.pin;
