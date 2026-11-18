@@ -1,50 +1,200 @@
 <!doctype html>
-<html lang="tr">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Gizlilik Politikası — Globale TV</title>
+<title>Privacy Policy — Globale TV</title>
 <meta name="robots" content="index, follow">
 <style>
 body{margin:0;background:#070b1a;color:#eef2ff;font:16px/1.6 system-ui,-apple-system,Segoe UI,sans-serif;padding:32px 18px 60px}
 .wrap{max-width:720px;margin:0 auto}
+.topbar{display:flex;justify-content:flex-end;margin-bottom:18px}
+select{background:rgba(255,255,255,.08);color:#eef2ff;border:1px solid rgba(255,255,255,.18);
+  border-radius:10px;padding:8px 12px;font-size:14px}
 h1{font-size:26px;margin-bottom:4px}
 .upd{color:#a5b4ec;font-size:13px;margin-bottom:28px}
 h2{font-size:19px;margin-top:32px;color:#eef2ff}
 p,li{color:#c7cff0}
 a{color:#6fa8ff}
 ul{padding-left:20px}
+[dir="rtl"] ul{padding-left:0;padding-right:20px}
 </style>
 </head>
 <body>
 <div class="wrap">
-<h1>Globale TV — Gizlilik Politikası</h1>
-<p class="upd">Son güncelleme: 18 Kasım 2026</p>
+  <div class="topbar">
+    <select id="langsel">
+      <option value="en">English</option>
+      <option value="tr">Türkçe</option>
+      <option value="de">Deutsch</option>
+      <option value="fr">Français</option>
+      <option value="ru">Русский</option>
+      <option value="ar">العربية</option>
+    </select>
+  </div>
 
-<p>Globale TV ("uygulama"), Android TV ve Android cihazlar için geliştirilmiş bir IPTV oynatıcı uygulamasıdır. Bu sayfa, uygulamayı kullanırken hangi bilgilerin nasıl işlendiğini açıklar.</p>
+  <h1 data-t="h1">Globale TV — Privacy Policy</h1>
+  <p class="upd" data-t="upd">Last updated: November 18, 2026</p>
 
-<h2>Uygulama ne topluyor?</h2>
-<ul>
-<li>Kullanıcının kendi eklediği yayın kaynak adresleri (M3U/Xtream linkleri) — sadece cihazda saklanır, bize gönderilmez.</li>
-<li>Cihazın kendi oluşturduğu bir cihaz tanımlayıcısı (MAC adresi veya benzeri) — web panel ile kaynak eşleştirmesi için kullanılır.</li>
-<li>Uygulama çökme/hata kayıtları (varsa) — sorun gidermek için.</li>
-</ul>
+  <p data-t="intro"></p>
 
-<h2>Uygulama ne toplamaz?</h2>
-<ul>
-<li>Ad, adres, telefon numarası gibi kimlik bilgileri</li>
-<li>Ödeme/kart bilgileri</li>
-<li>İzleme geçmişi üçüncü taraflarla paylaşılmaz</li>
-</ul>
+  <h2 data-t="h2a"></h2>
+  <ul>
+    <li data-t="a1"></li>
+    <li data-t="a2"></li>
+    <li data-t="a3"></li>
+  </ul>
 
-<h2>İçerik</h2>
-<p>Globale TV kendi içinde yayın veya kanal sağlamaz. Kullanıcı, sahip olduğu veya yasal olarak erişim hakkı bulunan kaynak adreslerini (M3U/Xtream) kendisi ekler. Uygulama yalnızca bir oynatıcıdır.</p>
+  <h2 data-t="h2b"></h2>
+  <ul>
+    <li data-t="b1"></li>
+    <li data-t="b2"></li>
+    <li data-t="b3"></li>
+  </ul>
 
-<h2>Veri paylaşımı</h2>
-<p>Toplanan sınırlı veriler üçüncü taraflarla satılmaz veya paylaşılmaz. Web panel (Globale Hesabım) ile senkronizasyon, yalnızca kullanıcının kendi cihazları arasında kaynak yönetimi içindir.</p>
+  <h2 data-t="h2c"></h2>
+  <p data-t="c1"></p>
 
-<h2>İletişim</h2>
-<p>Sorularınız için: <a href="https://t.me/GlobaltvPlayer">t.me/GlobaltvPlayer</a></p>
+  <h2 data-t="h2d"></h2>
+  <p data-t="d1"></p>
+
+  <h2 data-t="h2e"></h2>
+  <p data-t="e1">Contact: <a href="https://t.me/GlobaltvPlayer">t.me/GlobaltvPlayer</a></p>
 </div>
+
+<script>
+const I18N = {
+en: {
+  h1: "Globale TV — Privacy Policy",
+  upd: "Last updated: November 18, 2026",
+  intro: "Globale TV (\"the app\") is an IPTV player application for Android TV and Android devices. This page explains what information is processed when you use it.",
+  h2a: "What the app collects",
+  a1: "The streaming source addresses (M3U/Xtream links) you add yourself — stored only on your device, never sent to us.",
+  a2: "A device identifier the device generates itself (MAC address or similar) — used to match your device with the web panel.",
+  a3: "App crash/error logs (if any) — used only for troubleshooting.",
+  h2b: "What the app does not collect",
+  b1: "Personal identity details such as name, address, or phone number",
+  b2: "Payment or card information",
+  b3: "Viewing history is not shared with third parties",
+  h2c: "Content",
+  c1: "Globale TV does not provide any streams or channels itself. The user adds their own source addresses (M3U/Xtream) that they own or are legally entitled to access. The app is a player only.",
+  h2d: "Data sharing",
+  d1: "The limited data collected is never sold or shared with third parties. Syncing with the web panel (Globale Hesabım) is solely for managing sources across the user's own devices.",
+  h2e: "Contact",
+  e1prefix: "Contact: "
+},
+tr: {
+  h1: "Globale TV — Gizlilik Politikası",
+  upd: "Son güncelleme: 18 Kasım 2026",
+  intro: "Globale TV (\"uygulama\"), Android TV ve Android cihazlar için geliştirilmiş bir IPTV oynatıcı uygulamasıdır. Bu sayfa, uygulamayı kullanırken hangi bilgilerin nasıl işlendiğini açıklar.",
+  h2a: "Uygulama ne topluyor?",
+  a1: "Kullanıcının kendi eklediği yayın kaynak adresleri (M3U/Xtream linkleri) — sadece cihazda saklanır, bize gönderilmez.",
+  a2: "Cihazın kendi oluşturduğu bir cihaz tanımlayıcısı (MAC adresi veya benzeri) — web panel ile kaynak eşleştirmesi için kullanılır.",
+  a3: "Uygulama çökme/hata kayıtları (varsa) — sorun gidermek için.",
+  h2b: "Uygulama ne toplamaz?",
+  b1: "Ad, adres, telefon numarası gibi kimlik bilgileri",
+  b2: "Ödeme/kart bilgileri",
+  b3: "İzleme geçmişi üçüncü taraflarla paylaşılmaz",
+  h2c: "İçerik",
+  c1: "Globale TV kendi içinde yayın veya kanal sağlamaz. Kullanıcı, sahip olduğu veya yasal olarak erişim hakkı bulunan kaynak adreslerini (M3U/Xtream) kendisi ekler. Uygulama yalnızca bir oynatıcıdır.",
+  h2d: "Veri paylaşımı",
+  d1: "Toplanan sınırlı veriler üçüncü taraflarla satılmaz veya paylaşılmaz. Web panel (Globale Hesabım) ile senkronizasyon, yalnızca kullanıcının kendi cihazları arasında kaynak yönetimi içindir.",
+  h2e: "İletişim",
+  e1prefix: "Sorularınız için: "
+},
+de: {
+  h1: "Globale TV — Datenschutzerklärung",
+  upd: "Zuletzt aktualisiert: 18. November 2026",
+  intro: "Globale TV (\"die App\") ist eine IPTV-Player-Anwendung für Android TV und Android-Geräte. Diese Seite erklärt, welche Informationen bei der Nutzung verarbeitet werden.",
+  h2a: "Was die App sammelt",
+  a1: "Die vom Nutzer selbst hinzugefügten Stream-Quellen (M3U/Xtream-Links) — werden nur auf dem Gerät gespeichert, nie an uns gesendet.",
+  a2: "Eine vom Gerät selbst erzeugte Geräte-ID (MAC-Adresse o. Ä.) — wird für den Abgleich mit dem Webpanel verwendet.",
+  a3: "App-Absturz-/Fehlerprotokolle (falls vorhanden) — nur zur Fehlerbehebung.",
+  h2b: "Was die App nicht sammelt",
+  b1: "Persönliche Daten wie Name, Adresse oder Telefonnummer",
+  b2: "Zahlungs- oder Kartendaten",
+  b3: "Der Wiedergabeverlauf wird nicht an Dritte weitergegeben",
+  h2c: "Inhalte",
+  c1: "Globale TV stellt selbst keine Sender oder Streams bereit. Der Nutzer fügt eigene Quelladressen (M3U/Xtream) hinzu, auf die er Rechte besitzt. Die App ist nur ein Player.",
+  h2d: "Datenweitergabe",
+  d1: "Die wenigen erhobenen Daten werden niemals verkauft oder an Dritte weitergegeben. Die Synchronisierung mit dem Webpanel (Globale Hesabım) dient ausschließlich der Quellenverwaltung zwischen den eigenen Geräten des Nutzers.",
+  h2e: "Kontakt",
+  e1prefix: "Kontakt: "
+},
+fr: {
+  h1: "Globale TV — Politique de confidentialité",
+  upd: "Dernière mise à jour : 18 novembre 2026",
+  intro: "Globale TV (« l'application ») est un lecteur IPTV pour Android TV et appareils Android. Cette page explique quelles informations sont traitées lors de son utilisation.",
+  h2a: "Ce que l'application collecte",
+  a1: "Les adresses de sources de diffusion (liens M3U/Xtream) que vous ajoutez vous-même — stockées uniquement sur l'appareil, jamais envoyées.",
+  a2: "Un identifiant généré par l'appareil lui-même (adresse MAC ou similaire) — utilisé pour l'association avec le panneau web.",
+  a3: "Journaux de plantage/erreur de l'application (le cas échéant) — pour le dépannage uniquement.",
+  h2b: "Ce que l'application ne collecte pas",
+  b1: "Données personnelles telles que nom, adresse ou numéro de téléphone",
+  b2: "Informations de paiement ou de carte",
+  b3: "L'historique de visionnage n'est pas partagé avec des tiers",
+  h2c: "Contenu",
+  c1: "Globale TV ne fournit aucun flux ni chaîne. L'utilisateur ajoute ses propres adresses sources (M3U/Xtream) auxquelles il a légalement accès. L'application est uniquement un lecteur.",
+  h2d: "Partage des données",
+  d1: "Les données limitées collectées ne sont jamais vendues ni partagées avec des tiers. La synchronisation avec le panneau web sert uniquement à gérer les sources entre les appareils de l'utilisateur.",
+  h2e: "Contact",
+  e1prefix: "Contact : "
+},
+ru: {
+  h1: "Globale TV — Политика конфиденциальности",
+  upd: "Последнее обновление: 18 ноября 2026 г.",
+  intro: "Globale TV («приложение») — это IPTV-плеер для Android TV и Android-устройств. На этой странице описано, какая информация обрабатывается при использовании приложения.",
+  h2a: "Что собирает приложение",
+  a1: "Адреса источников вещания (ссылки M3U/Xtream), которые вы добавляете сами — хранятся только на устройстве, никогда не отправляются нам.",
+  a2: "Идентификатор устройства, созданный самим устройством (MAC-адрес или аналог) — используется для сопоставления с веб-панелью.",
+  a3: "Журналы сбоев/ошибок приложения (если есть) — только для устранения неполадок.",
+  h2b: "Что приложение не собирает",
+  b1: "Личные данные, такие как имя, адрес или номер телефона",
+  b2: "Платёжные данные или данные карт",
+  b3: "История просмотра не передаётся третьим лицам",
+  h2c: "Контент",
+  c1: "Globale TV само по себе не предоставляет каналы или трансляции. Пользователь сам добавляет источники (M3U/Xtream), на которые у него есть законные права. Приложение — только плеер.",
+  h2d: "Передача данных",
+  d1: "Ограниченные собранные данные никогда не продаются и не передаются третьим лицам. Синхронизация с веб-панелью служит только для управления источниками между собственными устройствами пользователя.",
+  h2e: "Контакты",
+  e1prefix: "Контакты: "
+},
+ar: {
+  h1: "Globale TV — سياسة الخصوصية",
+  upd: "آخر تحديث: 18 نوفمبر 2026",
+  intro: "Globale TV (\"التطبيق\") هو مشغّل IPTV لأجهزة Android TV وAndroid. توضح هذه الصفحة المعلومات التي تتم معالجتها عند استخدام التطبيق.",
+  h2a: "ما الذي يجمعه التطبيق",
+  a1: "عناوين مصادر البث (روابط M3U/Xtream) التي تضيفها بنفسك — تُخزَّن على جهازك فقط ولا تُرسَل إلينا.",
+  a2: "معرّف جهاز ينشئه الجهاز نفسه (عنوان MAC أو ما شابه) — يُستخدم لمطابقة جهازك مع لوحة التحكم عبر الويب.",
+  a3: "سجلات أعطال/أخطاء التطبيق (إن وجدت) — لاستكشاف الأخطاء فقط.",
+  h2b: "ما لا يجمعه التطبيق",
+  b1: "بيانات شخصية مثل الاسم أو العنوان أو رقم الهاتف",
+  b2: "معلومات الدفع أو البطاقة",
+  b3: "لا تتم مشاركة سجل المشاهدة مع أطراف ثالثة",
+  h2c: "المحتوى",
+  c1: "لا يوفّر Globale TV أي قنوات أو بث بنفسه. يضيف المستخدم عناوين المصادر الخاصة به (M3U/Xtream) التي يملكها أو يحق له قانونًا الوصول إليها. التطبيق مشغّل فقط.",
+  h2d: "مشاركة البيانات",
+  d1: "لا تُباع البيانات المحدودة التي يتم جمعها ولا تُشارَك مع أطراف ثالثة. تتم المزامنة مع لوحة التحكم عبر الويب فقط لإدارة المصادر بين أجهزة المستخدم الخاصة.",
+  h2e: "التواصل",
+  e1prefix: "للتواصل: "
+}
+};
+function applyLang(l){
+  const d = I18N[l] || I18N.en;
+  document.querySelectorAll('[data-t]').forEach(function(el){
+    const k = el.getAttribute('data-t');
+    if (k === 'e1') { el.innerHTML = d.e1prefix + '<a href="https://t.me/GlobaltvPlayer">t.me/GlobaltvPlayer</a>'; }
+    else if (d[k]) { el.textContent = d[k]; }
+  });
+  document.documentElement.lang = l;
+  document.documentElement.dir = (l === 'ar') ? 'rtl' : 'ltr';
+  try { localStorage.setItem('globale_privacy_lang', l); } catch(e){}
+}
+let initial = 'en';
+try { const saved = localStorage.getItem('globale_privacy_lang'); if (saved && I18N[saved]) initial = saved; } catch(e){}
+document.getElementById('langsel').value = initial;
+applyLang(initial);
+document.getElementById('langsel').addEventListener('change', function(e){ applyLang(e.target.value); });
+</script>
 </body>
 </html>
