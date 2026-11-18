@@ -395,7 +395,7 @@ const Input = {
   back(){
     const id = Screens.current;
     if(id==='player'){ Player.close(); return; }
-    if(id==='settings'){ ChannelUI.render(); return; }
+    if(id==='settings'){ App.sources ? ChannelUI.render() : Connect.start(); return; }
     if(id==='empty'){ Connect.start(); return; }
     if(id==='home'){ /* TV'de genelde ana ekranda geri = çık; test ortamında bir şey yapmaz */ return; }
     if(id==='connect'){ return; }
@@ -409,11 +409,17 @@ document.addEventListener('DOMContentLoaded', ()=>{
   });
   document.getElementById('btnOpenSettings').addEventListener('click', ()=> SettingsUI.open('general'));
   document.getElementById('btnSettingsBack').addEventListener('click', ()=>{
-    if(App.sources && App.sources.length) ChannelUI.render(); else Connect.start();
+    App.sources ? ChannelUI.render() : Connect.start();
   });
   document.getElementById('btnEmptyBack').addEventListener('click', ()=> Connect.start());
   document.getElementById('btnEmptyConnect').addEventListener('click', ()=> Connect.start());
+  document.getElementById('btnEmptySettings').addEventListener('click', ()=> SettingsUI.open('general'));
   document.getElementById('btnRotatePin').addEventListener('click', ()=> Connect.refresh(true));
+  document.getElementById('btnSkipDemo').addEventListener('click', ()=>{
+    clearInterval(Connect.timer);
+    App.sources = [];
+    Screens.show('empty');
+  });
   Input.init();
 });
 
