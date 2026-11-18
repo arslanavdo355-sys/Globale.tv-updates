@@ -4,44 +4,45 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
 <title>Globale.tv — webOS Test</title>
-<meta name="description" content="Globale.tv LG webOS tarayıcı test sürümü">
+<meta name="description" content="Globale.tv LG webOS Browser-Testversion">
 <link rel="stylesheet" href="style.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.5.17/hls.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="i18n.js"></script>
 </head>
 <body>
 
 <div id="tv-wrap">
   <div id="tv-screen">
 
-    <!-- Yükleniyor -->
+    <!-- Laden -->
     <div class="screen active" id="screen-loading">
       <div class="logo-mark">Globale<span>.tv</span></div>
       <div class="spinner"></div>
-      <div class="muted" style="font-size:1.6vh">webOS test sürümü yükleniyor…</div>
+      <div class="muted" style="font-size:1.6vh" data-i18n="loading"></div>
     </div>
 
-    <!-- Panel bağlantı ekranı -->
+    <!-- Panel-Verbindung -->
     <div class="screen" id="screen-connect">
       <div class="connect-grid">
         <div class="connect-left">
           <div class="logo-mark" style="font-size:2.6vh">Globale<span>.tv</span></div>
-          <div class="connect-title">TV'yi Web Paneline Bağla</div>
+          <div class="connect-title" data-i18n="connect_title"></div>
           <div class="kv">
-            <div class="k">Cihaz Kimliği</div>
+            <div class="k" data-i18n="device_id"></div>
             <div class="v" id="connectDeviceId">—</div>
           </div>
           <div class="kv">
-            <div class="k">PIN</div>
+            <div class="k" data-i18n="pin"></div>
             <div class="v" id="connectPin">······</div>
           </div>
-          <div class="pin-status" id="connectStatus">Bağlanıyor…</div>
-          <div class="panel-addr">Panel: <span id="connectPanelAddr">is.gd/gtvpanel</span></div>
-          <button class="btn-ghost focusable" id="btnRotatePin" style="align-self:flex-start; padding:1.1vh 1.8vw; margin-top:1vh;">PIN'i Yenile</button>
+          <div class="pin-status" id="connectStatus" data-i18n="connecting"></div>
+          <div class="panel-addr"><span data-i18n="panel_label"></span>: <span id="connectPanelAddr">is.gd/gtvpanel</span></div>
+          <button class="btn-ghost focusable" id="btnRotatePin" style="align-self:flex-start; padding:1.1vh 1.8vw; margin-top:1vh;" data-i18n="rotate_pin"></button>
         </div>
         <div class="col" style="align-items:center; gap:1vh;">
           <div class="qr-box"><div id="qrCanvas"></div></div>
-          <div class="muted" style="font-size:1.4vh">Telefonla QR'ı okut veya panel adresini aç</div>
+          <div class="muted" style="font-size:1.4vh" data-i18n="qr_hint"></div>
         </div>
       </div>
     </div>
@@ -51,15 +52,15 @@
       <div class="sidebar" id="sidebarGroups"></div>
       <div class="channel-list" id="channelList"></div>
       <div class="preview col" id="previewPane">
-        <div class="pv-box" id="previewBox"><span>Önizleme yok</span></div>
+        <div class="pv-box" id="previewBox"><span data-i18n="preview_empty"></span></div>
         <div class="pv-title" id="previewTitle">—</div>
-        <div class="pv-sub" id="previewSub">Bir kanal seçin</div>
+        <div class="pv-sub" id="previewSub" data-i18n="preview_select"></div>
         <div class="grow"></div>
-        <button class="icon-btn focusable" id="btnOpenSettings" title="Ayarlar" style="align-self:flex-end;">⚙</button>
+        <button class="icon-btn focusable" id="btnOpenSettings" style="align-self:flex-end;">⚙</button>
       </div>
     </div>
 
-    <!-- Boş durum (hiç kaynak yoksa) -->
+    <!-- Boş durum -->
     <div class="screen" id="screen-empty">
       <div class="topbar">
         <button class="icon-btn focusable" id="btnEmptyBack">←</button>
@@ -67,11 +68,9 @@
       </div>
       <div class="empty-state">
         <div class="logo-mark" style="font-size:3vh">Globale<span>.tv</span></div>
-        <div style="font-size:2vh">Henüz hiç kaynak eklenmedi</div>
-        <div class="muted" style="font-size:1.6vh; max-width:60%; text-align:center;">
-          Web panelden (is.gd/gtvpanel) MAC + PIN ile giriş yapıp kendi yasal yayın kaynağınızı (M3U / Xtream) ekleyin.
-        </div>
-        <button class="btn-primary focusable" id="btnEmptyConnect">Panel Bağlantı Ekranına Dön</button>
+        <div style="font-size:2vh" data-i18n="empty_title"></div>
+        <div class="muted" style="font-size:1.6vh; max-width:60%; text-align:center;" id="emptyBody"></div>
+        <button class="btn-primary focusable" id="btnEmptyConnect" data-i18n="empty_btn"></button>
       </div>
     </div>
 
@@ -88,20 +87,20 @@
     <!-- Ayarlar -->
     <div class="screen" id="screen-settings">
       <div class="settings-nav" id="settingsNav">
-        <div class="s-item focusable" data-sec="general"><span class="ic">⚙</span><span>Genel</span></div>
-        <div class="s-item focusable" data-sec="display"><span class="ic">🖥</span><span>Görüntü</span></div>
-        <div class="s-item focusable" data-sec="audio"><span class="ic">🔊</span><span>Ses ve Altyazılar</span></div>
-        <div class="s-item focusable" data-sec="player"><span class="ic">▶</span><span>Oynatıcı</span></div>
-        <div class="s-item focusable" data-sec="lang"><span class="ic">🌐</span><span>Dil</span></div>
-        <div class="s-item focusable" data-sec="qr"><span class="ic">📱</span><span>QR Kumanda</span></div>
-        <div class="s-item focusable" data-sec="sources"><span class="ic">🔗</span><span>Kanal Yönetimi</span></div>
-        <div class="s-item focusable" data-sec="backup"><span class="ic">💾</span><span>Yedekleme</span></div>
-        <div class="s-item focusable" data-sec="about"><span class="ic">ℹ</span><span>Uygulama ve Hakkında</span></div>
+        <div class="s-item focusable" data-sec="general"><span class="ic">⚙</span><span data-i18n="settings_general"></span></div>
+        <div class="s-item focusable" data-sec="display"><span class="ic">🖥</span><span data-i18n="settings_display"></span></div>
+        <div class="s-item focusable" data-sec="audio"><span class="ic">🔊</span><span data-i18n="settings_audio"></span></div>
+        <div class="s-item focusable" data-sec="player"><span class="ic">▶</span><span data-i18n="settings_player"></span></div>
+        <div class="s-item focusable" data-sec="lang"><span class="ic">🌐</span><span data-i18n="settings_lang"></span></div>
+        <div class="s-item focusable" data-sec="qr"><span class="ic">📱</span><span data-i18n="settings_qr"></span></div>
+        <div class="s-item focusable" data-sec="sources"><span class="ic">🔗</span><span data-i18n="settings_sources"></span></div>
+        <div class="s-item focusable" data-sec="backup"><span class="ic">💾</span><span data-i18n="settings_backup"></span></div>
+        <div class="s-item focusable" data-sec="about"><span class="ic">ℹ</span><span data-i18n="settings_about"></span></div>
       </div>
       <div class="settings-body" id="settingsBody">
         <div class="topbar" style="padding:0 0 1vh 0; border:none;">
           <button class="icon-btn focusable" id="btnSettingsBack">←</button>
-          <div class="title" id="settingsSectionTitle">Genel</div>
+          <div class="title" id="settingsSectionTitle">—</div>
         </div>
         <div id="settingsContent"></div>
       </div>
@@ -111,11 +110,11 @@
 </div>
 
 <!-- Sanal kumanda (yalnızca test modu) -->
-<button id="remote-toggle" aria-label="Kumandayı aç/kapat">🎮</button>
+<button id="remote-toggle" aria-label="Fernbedienung ein/aus">🎮</button>
 <div id="remote">
   <div class="r-top">
-    <button class="r-pill" data-key="Back">⟲ Geri</button>
-    <button class="r-pill" data-key="Home">⌂ Ana</button>
+    <button class="r-pill" data-key="Back"><span data-i18n="remote_back"></span></button>
+    <button class="r-pill" data-key="Home"><span data-i18n="remote_home"></span></button>
   </div>
   <div class="r-dpad">
     <button class="up" data-key="ArrowUp">▲</button>
@@ -129,7 +128,7 @@
     <button class="r-pill" data-key="ChanDown">CH-</button>
   </div>
 </div>
-<button class="fullscreen-btn" id="btnFullscreen">⛶ Tam Ekran</button>
+<button class="fullscreen-btn" id="btnFullscreen"><span data-i18n="fullscreen"></span></button>
 
 <script src="app.js"></script>
 </body>

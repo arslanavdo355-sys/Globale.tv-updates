@@ -134,12 +134,12 @@ const Connect = {
     await this.refresh(false);
   },
   async refresh(rotate){
-    document.getElementById('connectStatus').textContent = 'Bağlanıyor…';
+    document.getElementById('connectStatus').textContent = t('connecting');
     const session = await Panel.hello(rotate);
     if(!session){
       document.getElementById('connectStatus').textContent = Panel.corsBlocked
-        ? 'Panel sunucusu tarayıcı erişimine henüz izin vermiyor (CORS). Bu, test sürümüne özel bilinen bir sorun — Android uygulamasını etkilemiyor.'
-        : 'Panele ulaşılamadı — bağlantınızı kontrol edin.';
+        ? t('panel_cors')
+        : t('panel_unreachable');
       return;
     }
     document.getElementById('connectPin').textContent = session.pin;
@@ -167,8 +167,8 @@ const Connect = {
       const m = String(Math.floor(left/60)).padStart(2,'0');
       const s = String(left%60).padStart(2,'0');
       document.getElementById('connectStatus').textContent = left > 0
-        ? `PIN ${m}:${s} içinde yenilenecek`
-        : 'PIN süresi doldu — yenileniyor…';
+        ? t('pin_refresh_in', { time: `${m}:${s}` })
+        : t('pin_expired');
       if(left <= 0){ clearInterval(this.timer); this.refresh(true); }
     };
     update();
@@ -190,8 +190,8 @@ const ChannelUI = {
     });
   },
   labelFor(kind){
-    const map = { m3u:'M3U Listeleri', xtream:'Xtream Hesapları', url:'Bağlantılar' };
-    return map[kind] || 'Diğer Kaynaklar';
+    const map = { m3u:t('group_m3u'), xtream:t('group_xtream'), url:t('group_url') };
+    return map[kind] || t('group_other');
   },
   render(){
     this.buildGroups();
@@ -228,7 +228,7 @@ const ChannelUI = {
   },
   preview(ch){
     document.getElementById('previewTitle').textContent = ch.name || '—';
-    document.getElementById('previewSub').textContent = ch.kind === 'xtream' ? 'Xtream Codes kaynağı' : (ch.kind === 'm3u' ? 'M3U yayını' : (ch.url||''));
+    document.getElementById('previewSub').textContent = ch.kind === 'xtream' ? t('group_xtream') : (ch.kind === 'm3u' ? t('group_m3u') : (ch.url||''));
   }
 };
 
@@ -243,7 +243,7 @@ const Player = {
     this.stop();
     const url = ch.url;
     if(!url){
-      document.getElementById('playerMeta').textContent = 'Bu kaynak için oynatma adresi bulunamadı.';
+      document.getElementById('playerMeta').textContent = t('no_playback_url');
       return;
     }
     if(Hls && Hls.isSupported() && /\.m3u8($|\?)/i.test(url)){
@@ -252,7 +252,7 @@ const Player = {
       this.hls.attachMedia(video);
       this.hls.on(Hls.Events.MANIFEST_PARSED, ()=> video.play().catch(()=>{}));
       this.hls.on(Hls.Events.ERROR, (e, data)=>{
-        if(data.fatal) document.getElementById('playerMeta').textContent = 'Yayın açılamadı (' + data.type + ')';
+        if(data.fatal) document.getElementById('playerMeta').textContent = t('stream_failed') + ' (' + data.type + ')';
       });
     } else {
       video.src = url;
@@ -281,59 +281,76 @@ const Player = {
 };
 
 // ---------------- Ayarlar ----------------
-const SETTINGS_SECTIONS = {
-  general: { title:'Genel', rows:[
-    { label:'Açılışta göster', desc:'Ana sayfa, son izlenen kanal veya seçili bir kanal', soon:true },
-    { label:'Fabrika ayarlarına dön', desc:'Ayarlar sıfırlanır, kaynaklar ve favoriler silinmez', soon:true },
+function SETTINGS_SECTIONS(){ return {
+  general: { titleKey:'settings_general', rows:[
+    { labelKey:'s_general_startup_l', descKey:'s_general_startup_d', soon:true },
+    { labelKey:'s_general_reset_l', descKey:'s_general_reset_d', soon:true },
   ]},
-  display:{ title:'Görüntü', rows:[
-    { label:'Görüntü boyutu', desc:'Sığdır / Doldur / Uzat', soon:true },
-    { label:'4K / HEVC yayınlar', desc:'Cihazın desteklediği en yüksek çözünürlük kullanılır', soon:true },
+  display:{ titleKey:'settings_display', rows:[
+    { labelKey:'s_display_size_l', descKey:'s_display_size_d', soon:true },
+    { labelKey:'s_display_hevc_l', descKey:'s_display_hevc_d', soon:true },
   ]},
-  audio:{ title:'Ses ve Altyazılar', rows:[
-    { label:'Ses dili', desc:'Yayında birden fazla ses izi varsa seçilir', soon:true },
-    { label:'Altyazı dili', desc:'Yayında altyazı izi varsa seçilir', soon:true },
+  audio:{ titleKey:'settings_audio', rows:[
+    { labelKey:'s_audio_lang_l', descKey:'s_audio_lang_d', soon:true },
+    { labelKey:'s_sub_lang_l', descKey:'s_sub_lang_d', soon:true },
   ]},
-  player:{ title:'Oynatıcı', rows:[
-    { label:'Otomatik bağlantı yenileme', desc:'Yayın koptuğunda otomatik yeniden dener', soon:true },
-    { label:'Son izlenen kanallar', desc:'Hızlı erişim için en son izlenenleri hatırla', soon:true },
+  player:{ titleKey:'settings_player', rows:[
+    { labelKey:'s_player_reconnect_l', descKey:'s_player_reconnect_d', soon:true },
+    { labelKey:'s_player_recent_l', descKey:'s_player_recent_d', soon:true },
   ]},
-  lang:{ title:'Dil', rows:[
-    { label:'Uygulama dili', desc:'Varsayılan: Almanca — şimdilik TR/DE/EN hazır, diğer 17 dil ekleniyor', soon:true },
+  lang:{ titleKey:'settings_lang', custom:'lang' },
+  qr:{ titleKey:'settings_qr', rows:[
+    { labelKey:'s_qr_connect_l', descKey:'s_qr_connect_d', soon:false, action:'connect' },
   ]},
-  qr:{ title:'QR Kumanda', rows:[
-    { label:'Telefonla bağlan', desc:'Panel bağlantı ekranındaki QR kodu kullanın', soon:false, action:'connect' },
+  sources:{ titleKey:'settings_sources', rows:[
+    { labelKey:'s_sources_manage_l', descKey:'s_sources_manage_d', descParams:{panel:PANEL_DISPLAY}, soon:false, action:'connect' },
   ]},
-  sources:{ title:'Kanal Yönetimi', rows:[
-    { label:'Kaynakları yönet', desc:'Ekleme / düzenleme / silme web panelinden yapılır: ' + PANEL_DISPLAY, soon:false, action:'connect' },
+  backup:{ titleKey:'settings_backup', rows:[
+    { labelKey:'s_backup_export_l', descKey:'s_backup_export_d', soon:true },
   ]},
-  backup:{ title:'Yedekleme ve Geri Yükleme', rows:[
-    { label:'Ayarları dışa aktar', desc:'Yakında', soon:true },
+  about:{ titleKey:'settings_about', rows:[
+    { labelKey:'s_about_version_l', descKey:'s_about_version_d', soon:false },
+    { labelKey:'s_about_device_l', dynamic:'deviceId', soon:false },
   ]},
-  about:{ title:'Uygulama ve Hakkında', rows:[
-    { label:'Sürüm', desc:'Globale.tv webOS — test sürümü', soon:false },
-    { label:'Cihaz Kimliği', desc:'', soon:false, dynamic:'deviceId' },
-  ]},
-};
+};}
 const SettingsUI = {
+  currentSection: 'general',
   open(sec){
+    this.currentSection = sec;
     Screens.show('settings');
     document.querySelectorAll('.s-item').forEach(el=>el.classList.toggle('focused', el.dataset.sec===sec));
-    const data = SETTINGS_SECTIONS[sec] || SETTINGS_SECTIONS.general;
-    document.getElementById('settingsSectionTitle').textContent = data.title;
+    const data = SETTINGS_SECTIONS()[sec] || SETTINGS_SECTIONS().general;
+    document.getElementById('settingsSectionTitle').textContent = t(data.titleKey);
     const body = document.getElementById('settingsContent');
     body.innerHTML = '';
+    if(data.custom === 'lang'){ this.renderLangPicker(body); Focus.refresh('settings'); return; }
     data.rows.forEach(row=>{
       const div = document.createElement('div');
       div.className = 'setting-row focusable';
-      let desc = row.desc;
-      if(row.dynamic === 'deviceId') desc = getDeviceId();
-      div.innerHTML = `<div><div class="label">${row.label}</div><div class="desc">${desc}</div></div>` +
-        (row.soon ? '<span class="badge-soon">YAKINDA</span>' : '');
+      let desc = row.dynamic === 'deviceId' ? getDeviceId() : t(row.descKey, row.descParams);
+      div.innerHTML = `<div><div class="label">${t(row.labelKey)}</div><div class="desc">${desc}</div></div>` +
+        (row.soon ? `<span class="badge-soon">${t('soon')}</span>` : '');
       if(row.action === 'connect') div.onclick = ()=> Connect.start();
       body.appendChild(div);
     });
     Focus.refresh('settings');
+  },
+  renderLangPicker(body){
+    const current = getLang();
+    SUPPORTED_LANGS.forEach(code=>{
+      const hasFull = !!I18N[code];
+      const div = document.createElement('div');
+      div.className = 'setting-row focusable';
+      div.innerHTML = `<div><div class="label">${LANG_NAMES[code] || code}</div></div>` +
+        (code === current ? '<span class="badge-soon" style="color:var(--ok); border-color:var(--ok);">✓</span>'
+          : (hasFull ? '' : `<span class="badge-soon">${t('soon')}</span>`));
+      div.onclick = ()=>{
+        setLang(code);
+        applyStaticI18n();
+        this.open('lang');
+      };
+      body.appendChild(div);
+    });
   }
 };
 
@@ -403,6 +420,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
 // ---------------- Uygulama girişi ----------------
 const App = { sources: null };
 (async function boot(){
+  applyStaticI18n();
+  document.getElementById('emptyBody').textContent = t('empty_body', { panel: PANEL_DISPLAY });
   Screens.show('loading');
   await new Promise(r=>setTimeout(r, 400)); // kısa marka animasyonu
   const sources = await Panel.sources();
