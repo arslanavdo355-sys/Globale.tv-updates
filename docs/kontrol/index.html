@@ -104,6 +104,16 @@
   }
   .toast.show{opacity:1; transform:translateX(-50%) translateY(0)}
   #status{color:var(--fg-dim); font-size:11.5px; text-align:center; margin-top:16px}
+  .use-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+  .use-list{display:flex; flex-direction:column}
+  .use-row{display:flex; justify-content:space-between; align-items:flex-start; gap:12px; padding:11px 14px; font-size:13px}
+  .use-row + .use-row{border-top:1px solid var(--card-border)}
+  .use-row .id{font-family:ui-monospace,Menlo,Consolas,monospace; font-size:12.5px}
+  .use-row .meta{color:var(--fg-dim); font-size:11.5px; margin-top:2px}
+  .use-row .n{font-variant-numeric:tabular-nums; font-weight:600; text-align:right; white-space:nowrap}
+  .key-form{display:flex; gap:8px; padding:14px; flex-wrap:wrap}
+  .key-form input{flex:1 1 200px; min-width:0; background:var(--bg2); color:var(--fg); border:1px solid var(--card-border); border-radius:10px; padding:10px 12px; font:inherit}
+  .muted{color:var(--fg-dim); font-size:13px; padding:14px}
 </style>
 </head>
 <body>
@@ -208,6 +218,30 @@
         <div class="btns"><button class="btn ghost" data-open="https://github.com/arslanavdo355-sys/globale.tv">Aç</button></div>
       </div>
     </div>
+  </section>
+
+  <section>
+    <div class="sec-label">Kullanım (açılış / kapanış)</div>
+    <div class="use-grid" style="margin-bottom:10px">
+      <div class="stat"><div class="label">Toplam cihaz</div><div class="value" id="uDevices">—</div></div>
+      <div class="stat"><div class="label">Son 24 saat</div><div class="value" id="uActive24">—</div></div>
+      <div class="stat"><div class="label">Son 7 gün</div><div class="value" id="uActive7">—</div></div>
+      <div class="stat"><div class="label">Toplam açılış</div><div class="value" id="uOpens">—</div></div>
+    </div>
+    <div class="card-group" id="uKeyBox" hidden>
+      <div class="key-form">
+        <input id="uKey" type="password" placeholder="Erişim anahtarı" autocomplete="off">
+        <button class="btn primary" id="uKeySave" type="button">Kaydet</button>
+      </div>
+    </div>
+    <div class="sec-label" style="margin-top:14px">Sürümlere göre cihaz</div>
+    <div class="card-group" style="padding:14px">
+      <div class="bars" id="uVersions"><div class="muted" style="padding:0">Yükleniyor…</div></div>
+    </div>
+    <div class="sec-label" style="margin-top:14px">Tüm cihazlar</div>
+    <div class="card-group"><div class="use-list" id="uDevList"><div class="muted">Yükleniyor…</div></div></div>
+    <div class="sec-label" style="margin-top:14px">Son açılış ve kapanışlar</div>
+    <div class="card-group"><div class="use-list" id="uEvList"><div class="muted">Yükleniyor…</div></div></div>
   </section>
 
   <section>
@@ -382,8 +416,86 @@
     });
   }
 
-  document.getElementById('refreshBtn').addEventListener('click', loadStats);
+  var USE_URL = 'https://globale-stats.netlify.app/api/stats';
+  var KEY_NAME = 'gtv_stats_key';
+  function esc(v){ return String(v == null ? '' : v).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function getKey(){ try { return localStorage.getItem(KEY_NAME) || ''; } catch(e){ return ''; } }
+  function setKey(k){ try { localStorage.setItem(KEY_NAME, k); } catch(e){} }
+  function when(iso){ return new Date(iso).toLocaleString('tr-TR', {timeZone:'Europe/Berlin', day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit'}); }
+  function showKeyBox(show){ document.getElementById('uKeyBox').hidden = !show; }
+  function loadUsage(){
+    var key = getKey();
+    if(!key){
+      showKeyBox(true);
+      document.getElementById('uDevList').innerHTML = '<div class="muted">Erişim anahtarını girince cihazlar burada görünür.</div>';
+      return;
+    }
+    fetch(USE_URL + '?key=' + encodeURIComponent(key), { cache: 'no-store' })
+      .then(function(r){
+        if(r.status === 401){ setKey(''); throw new Error('auth'); }
+        if(!r.ok) throw new Error('http');
+        return r.json();
+      })
+      .then(renderUsage)
+      .catch(function(e){
+        var msg = e.message === 'auth'
+          ? 'Anahtar yanlış. Yeniden gir.'
+          : 'Kullanım verisi şu an alınamadı. Sunucu henüz yayında olmayabilir.';
+        if(e.message === 'auth') showKeyBox(true);
+        document.getElementById('uDevList').innerHTML = '<div class="muted">' + msg + '</div>';
+      });
+  }
+  function renderUsage(d){
+    showKeyBox(false);
+    var t = d.totals || {};
+    document.getElementById('uDevices').textContent = fmt(t.devices || 0);
+    document.getElementById('uActive24').textContent = fmt(t.active24 || 0);
+    document.getElementById('uActive7').textContent = fmt(t.active7 || 0);
+    document.getElementById('uOpens').textContent = fmt(t.opens || 0);
+
+    var vers = Object.keys(d.versions || {}).map(function(k){ return { v: k, n: d.versions[k] }; })
+      .sort(function(a, b){ return b.n - a.n; });
+    var vEl = document.getElementById('uVersions');
+    if(!vers.length){
+      vEl.innerHTML = '<div class="muted" style="padding:0">Henüz veri yok.</div>';
+    } else {
+      var max = Math.max.apply(null, vers.map(function(x){ return x.n; })) || 1;
+      vEl.innerHTML = vers.map(function(x){
+        return '<div class="bar-row"><div class="ver">' + esc(x.v) + '</div>' +
+          '<div class="bar-track"><div class="bar-fill" style="width:' + Math.round(x.n / max * 100) + '%"></div></div>' +
+          '<div class="cnt">' + fmt(x.n) + '</div></div>';
+      }).join('');
+    }
+
+    var devs = d.devices || [];
+    document.getElementById('uDevList').innerHTML = devs.length
+      ? devs.map(function(x){
+          return '<div class="use-row"><div><div class="id">' + esc(String(x.id).slice(0, 8)) + '…</div>' +
+            '<div class="meta">Sürüm ' + esc(x.version || '?') + ' · ilk ' + esc(when(x.first)) + '</div></div>' +
+            '<div class="n">' + fmt(x.opens) + ' açılış<div class="meta">son ' + esc(when(x.last)) + '</div></div></div>';
+        }).join('')
+      : '<div class="muted">Henüz kayıt yok. Uygulama açılınca burada görünecek.</div>';
+
+    var evs = d.events || [];
+    document.getElementById('uEvList').innerHTML = evs.length
+      ? evs.map(function(x){
+          var label = x.ev === 'open' ? 'Açıldı' : 'Kapandı';
+          return '<div class="use-row"><div><div style="font-weight:600">' + label + '</div>' +
+            '<div class="meta"><span class="id">' + esc(String(x.id).slice(0, 8)) + '…</span> · sürüm ' + esc(x.v || '?') + '</div></div>' +
+            '<div class="n">' + esc(when(x.t)) + '</div></div>';
+        }).join('')
+      : '<div class="muted">Henüz olay yok.</div>';
+  }
+  document.getElementById('uKeySave').addEventListener('click', function(){
+    var k = document.getElementById('uKey').value.trim();
+    if(!k) return;
+    setKey(k);
+    document.getElementById('uKey').value = '';
+    loadUsage();
+  });
+  document.getElementById('refreshBtn').addEventListener('click', function(){ loadStats(); loadUsage(); });
   loadStats();
+  loadUsage();
 })();
 </script>
 </body>
