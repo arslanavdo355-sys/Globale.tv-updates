@@ -416,7 +416,7 @@
     });
   }
 
-  var USE_URL = 'https://globale-stats.onrender.com/api/stats';
+  var USE_URL = 'https://globale-stats.netlify.app/api/stats';
   var KEY_NAME = 'gtv_stats_key';
   function esc(v){ return String(v == null ? '' : v).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
   function getKey(){ try { return localStorage.getItem(KEY_NAME) || ''; } catch(e){ return ''; } }
